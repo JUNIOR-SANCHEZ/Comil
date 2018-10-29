@@ -1,0 +1,463 @@
+<?php /* Smarty version Smarty-3.1.8, created on 2018-10-11 20:27:33
+         compiled from "C:\xampp\htdocs\DuenaDeMi\modules\tutoras\views\pgf\nuevo.tpl" */ ?>
+<?php /*%%SmartyHeaderCode:14369138295ba66d80b7be32-83093998%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
+$_valid = $_smarty_tpl->decodeProperties(array (
+  'file_dependency' => 
+  array (
+    'e070a0d658fc696bbe569214345438d6830653ae' => 
+    array (
+      0 => 'C:\\xampp\\htdocs\\DuenaDeMi\\modules\\tutoras\\views\\pgf\\nuevo.tpl',
+      1 => 1539282417,
+      2 => 'file',
+    ),
+  ),
+  'nocache_hash' => '14369138295ba66d80b7be32-83093998',
+  'function' => 
+  array (
+  ),
+  'version' => 'Smarty-3.1.8',
+  'unifunc' => 'content_5ba66d80b817f6_60048265',
+  'variables' => 
+  array (
+    '_layoutParams' => 0,
+    'nina' => 0,
+    'list' => 0,
+    'desarrollo_pers' => 0,
+  ),
+  'has_nocache_code' => false,
+),false); /*/%%SmartyHeaderCode%%*/?>
+<?php if ($_valid && !is_callable('content_5ba66d80b817f6_60048265')) {function content_5ba66d80b817f6_60048265($_smarty_tpl) {?><div class="content">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="row">
+                <form action="<?php echo $_smarty_tpl->tpl_vars['_layoutParams']->value['root'];?>
+tutoras/pgf/nuevopgf" method="post" id="form-pgf">
+                    <input type="hidden" name="guardar" value="1">
+                    <div class="col-md-12">
+                        <div class="box box-solid">
+                            <div class="box-header with-border">
+                                <h3 class="box-title">PROYECTO GLOBAL DE FAMILIA</h3>
+                                <button type="button" class="btn btn-primary pull-right " id="btn-guardar-pgf">Guardar</button>
+                            </div>
+                            <!-- /.box-header -->
+                            <div class="box-body">
+                                <div class="box-group" id="accordion">
+                                    <div class="panel box box-primary">
+                                        <div class="box-header with-border">
+                                            <h4 class="box-title">
+                                                <a data-toggle="collapse" data-parent="#accordion" href="#datos-identificacion">
+                                                    Datos de indentificación
+                                                </a>
+                                            </h4>
+                                        </div>
+                                        <div id="datos-identificacion" class="panel-collapse collapse in">
+                                            <div class="box-body">
+                                                <div class="row">
+                                                    <div class="col-md-10 col-md-offset-1">
+                                                        <div class="row">
+                                                            <div class="col-md-12">
+                                                                <!-- parte lateral foto -->
+                                                                <div class="row">
+                                                                    <div class="col-md-6">
+                                                                        <div class="form-group">
+                                                                            <label for="">Familia:</label>
+                                                                            <div class="input-group">
+                                                                                <div class="input-group-addon">
+                                                                                    <i class="fa fa-user"></i>
+                                                                                </div>
+                                                                                <input type="text" name="famila"
+                                                                                    placeholder="Familia" class="form-control">
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-md-6">
+                                                                        <div class="form-group">
+                                                                            <label for="">Niños/as Adolescentes:</label>
+                                                                            <div class="input-group">
+                                                                                <div class="input-group-addon">
+                                                                                    <i class="fa fa-user"></i>
+                                                                                </div>
+                                                                                <select name="nina" class="form-control">
+                                                                                    <option value="0">Seleccione</option>
+                                                                                    <?php  $_smarty_tpl->tpl_vars['list'] = new Smarty_Variable; $_smarty_tpl->tpl_vars['list']->_loop = false;
+ $_from = $_smarty_tpl->tpl_vars['nina']->value; if (!is_array($_from) && !is_object($_from)) { settype($_from, 'array');}
+foreach ($_from as $_smarty_tpl->tpl_vars['list']->key => $_smarty_tpl->tpl_vars['list']->value){
+$_smarty_tpl->tpl_vars['list']->_loop = true;
+?>
+                                                                                    <option value="<?php echo $_smarty_tpl->tpl_vars['list']->value['id_nina'];?>
+"><?php echo $_smarty_tpl->tpl_vars['list']->value['nombres'];?>
+
+                                                                                        <?php echo $_smarty_tpl->tpl_vars['list']->value['apellidos'];?>
+</option>
+                                                                                    <?php } ?>
+                                                                                </select>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-md-6">
+                                                                        <div class="form-group">
+                                                                            <label for="">Etnia de la Familia:</label>
+                                                                            <div class="input-group">
+                                                                                <div class="input-group-addon">
+                                                                                    <!-- <i class="fa fa-user"></i> -->
+                                                                                </div>
+                                                                                <input type="text" name="etnia"
+                                                                                    placeholder="Etnia" class="form-control">
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-md-6">
+                                                                        <div class="form-group">
+                                                                            <label for="">Causa del acogimiento:</label>
+                                                                            <div class="input-group">
+                                                                                <div class="input-group-addon">
+                                                                                    <!-- <i class="fa fa-user"></i> -->
+                                                                                </div>
+                                                                                <input type="text" name="causa_acogimiento"
+                                                                                    placeholder="Causa" class="form-control">
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <!-- row 1 -->
+                                                                <div class="row">
+                                                                    <div class="col-md-6">
+                                                                        <div class="form-group">
+                                                                            <label for="">Fecha de elaboracion:</label>
+                                                                            <div class="input-group">
+                                                                                <div class="input-group-addon">
+                                                                                    <i class="fa fa-address-card"></i>
+                                                                                </div>
+                                                                                <input type="text" name="fecha_elaboracion"
+                                                                                    placeholder="Fecha" class="form-control">
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-md-6">
+                                                                        <div class="form-group">
+                                                                            <label for="">Fecha proxima evaluacion:</label>
+                                                                            <div class="input-group">
+                                                                                <div class="input-group-addon">
+                                                                                    <!-- <i class="fa fa-at"></i> -->
+                                                                                </div>
+                                                                                <input type="text" name="fecha_evaluacion"
+                                                                                    placeholder="Fecha" class="form-control">
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <!-- row 1 -->
+                                                                <!-- row 2 -->
+                                                                <div class="row">
+                                                                    <div class="col-md-6">
+                                                                        <div class="form-group">
+                                                                            <label for="">Profesional</label>
+                                                                            <div class="input-group">
+                                                                                <div class="input-group-addon">
+                                                                                    <i></i>
+                                                                                </div>
+                                                                                <input type="text" name="profesional"
+                                                                                    placeholder="Profesional" class="form-control">
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-md-6">
+                                                                        <div class="form-group">
+                                                                            <label for="">Cedula:</label>
+                                                                            <div class="input-group">
+                                                                                <div class="input-group-addon">
+                                                                                    <i></i>
+                                                                                </div>
+                                                                                <input type="text" name="cedula"
+                                                                                    placeholder="Cedula" class="form-control">
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-md-4">
+
+                                                                </div>
+
+
+                                                            </div>
+                                                            <!-- row 1 -->
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="panel box box-warning">
+                                        <div class="box-header with-border">
+                                            <h4 class="box-title">
+                                                <a data-toggle="collapse" data-parent="#accordion" href="#infomante">
+                                                    Diagnostico de la situación
+                                                </a>
+                                            </h4>
+                                        </div>
+                                        <div id="infomante" class="panel-collapse collapse ">
+                                            <div class="box-body">
+                                                <div class="row">
+                                                    <div class="col-md-10 col-md-offset-1">
+                                                        <div class="col-md-12">
+                                                            <div class="row">
+                                                                <div class="col-md-6">
+                                                                    <div class="form-group">
+                                                                        <label for="">De la famila:</label>
+                                                                        <textarea name="diag_familia" id="" rows="5"
+                                                                            class="form-control"></textarea>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-md-6">
+                                                                    <div class="form-group">
+                                                                        <label for="">Del Equipo:</label>
+                                                                        <textarea name="diag_equipo" id="" rows="5"
+                                                                            class="form-control"></textarea>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="panel box box-warning">
+                                        <div class="box-header with-border">
+                                            <h4 class="box-title">
+                                                <a data-toggle="collapse" data-parent="#accordion" href="#objetivo_general">
+                                                    Objetivo General
+                                                </a>
+                                            </h4>
+                                        </div>
+                                        <div id="objetivo_general" class="panel-collapse collapse">
+                                            <div class="box-body">
+                                                <div class="row">
+                                                    <div class="col-md-10 col-md-offset-1">
+                                                        <div class="col-md-12">
+                                                            <div class="row">
+                                                                <div class="col-md-6">
+                                                                    <div class="form-group">
+                                                                        <label for="">Consensuado con la familia :</label>
+                                                                        <textarea name="Consensuado_familia" id="" rows="5"
+                                                                            class="form-control"></textarea>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-md-6">
+                                                                    <div class="form-group">
+                                                                        <label for="">Del equipo Consensuado con la
+                                                                            familia:</label>
+                                                                        <textarea name="del_equipo" rows="5" class="form-control"></textarea>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- </form> -->
+                                </div>
+                                <!-- /.box-body -->
+                            </div>
+                            <!-- /.box -->
+                        </div>
+                    </div>
+                </form>
+                <form id="form-area">
+                    <div class="col-md-12">
+                        <div class="box box-solid">
+                            <div class="box-header with-border">
+                                <h2 class="box-title">Area</h2>
+                                <button type="submit" class="btn btn-info pull-right">Argregar</button>
+                                <div class="form-group col-md-4 pull-right">
+                                    <select id="disabledSelect" name="area_acomp" class="form-control ">
+                                        <option value="">Seleccionar:</option>
+                                        <?php  $_smarty_tpl->tpl_vars['list'] = new Smarty_Variable; $_smarty_tpl->tpl_vars['list']->_loop = false;
+ $_from = $_smarty_tpl->tpl_vars['desarrollo_pers']->value; if (!is_array($_from) && !is_object($_from)) { settype($_from, 'array');}
+foreach ($_from as $_smarty_tpl->tpl_vars['list']->key => $_smarty_tpl->tpl_vars['list']->value){
+$_smarty_tpl->tpl_vars['list']->_loop = true;
+?>
+                                        <option value="<?php echo $_smarty_tpl->tpl_vars['list']->value['id_area_acomp'];?>
+"><?php echo $_smarty_tpl->tpl_vars['list']->value['descripcion_area_acomp'];?>
+</option>
+                                        <?php } ?>
+                                    </select>
+                                </div>
+                            </div>
+                            <!-- /.box-header -->
+                            <div class="box-body">
+                                <div class="box-group" id="accordion">
+                                    <!-- we are adding the .panel class so bootstrap.js collapse plugin detects it -->
+                                    <div class="panel box box-primary">
+                                        <div class="box-header with-border">
+                                            <h4 class="box-title">
+                                                <a data-toggle="collapse" data-parent="#accordion" href="#diag-area">
+                                                    Diagnostico del area
+                                                </a>
+                                            </h4>
+                                        </div>
+                                        <div id="diag-area" class="panel-collapse collapse">
+                                            <div class="box-body">
+                                                <div class="row">
+                                                    <div class="col-md-10 col-md-offset-1">
+
+                                                        <div class="row">
+                                                            <div class="col-md-12">
+                                                                <!-- parte lateral foto -->
+                                                                <div class="row">
+                                                                    <div class="col-md-6">
+                                                                        <div class="form-group">
+
+                                                                            <label for="">Descripcion</label>
+                                                                            <textarea name="diagnostico_area" id=""
+                                                                                rows="5" class="form-control"></textarea>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-md-4">
+
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <!-- row 1 -->
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="panel box box-warning">
+                                        <div class="box-header with-border">
+                                            <h4 class="box-title">
+                                                <a data-toggle="collapse" data-parent="#accordion" href="#objetivo">
+                                                    Objetivo del area
+                                                </a>
+                                            </h4>
+                                        </div>
+                                        <div id="objetivo" class="panel-collapse collapse">
+                                            <div class="box-body">
+                                                <div class="row">
+                                                    <div class="col-md-10 col-md-offset-1">
+
+                                                        <div class="row">
+                                                            <div class="col-md-12">
+                                                                <!-- parte lateral foto -->
+                                                                <div class="row">
+                                                                    <div class="col-md-6">
+                                                                        <div class="form-group">
+
+                                                                            <label for="">Descripcion</label>
+                                                                            <textarea name="objetivo_area" id="" rows="5"
+                                                                                class="form-control"></textarea>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-md-4">
+
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <!-- row 1 -->
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="panel box box-warning">
+                                        <div class="box-header with-border">
+                                            <h4 class="box-title">
+                                                <a data-toggle="collapse" data-parent="#accordion" href="#Activi">
+                                                    Actividades del area
+                                                </a>
+                                            </h4>
+                                        </div>
+                                        <div id="Activi" class="panel-collapse collapse">
+                                            <div class="box-body">
+                                                <div class="row">
+                                                    <div class="col-md-10 col-md-offset-1">
+                                                        <div class="col-md-12">
+                                                           <div class="row">
+                                                                <div class="col-md-12">
+                                                                    <div class="form-group">
+                                                                        <label for="">Descripcion</label>
+                                                                        <textarea name="act_descripcion" id="" rows="5"
+                                                                            class="form-control"></textarea>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-md-6">
+                                                                    <div class="form-group">
+                                                                        <label for="">Responsable:</label>
+                                                                        <textarea name="act_responsable" id="" rows="5"
+                                                                            class="form-control"></textarea>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-md-6">
+                                                                    <div class="form-group">
+                                                                        <label for="">Tiempo</label>
+                                                                        <textarea name="act_tiempo" id="" rows="5"
+                                                                            class="form-control"></textarea>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-md-6">
+                                                                    <div class="form-group">
+                                                                        <label for="">Evaluacion</label>
+                                                                        <textarea name="act_evaluacion" id="" rows="5"
+                                                                            class="form-control"></textarea>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-md-6">
+                                                                    <div class="form-group">
+                                                                        <label for="">Observaciones</label>
+                                                                        <textarea name="act_observaciones" id="" rows="5"
+                                                                            class="form-control"></textarea>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="panel box box-warning">
+                                        <div class="box-header with-border">
+                                            <h4 class="box-title">
+                                                <a data-toggle="collapse" data-parent="#accordion" href="#situacion">
+                                                    Evaluacion global de todas las areas
+                                                </a>
+                                            </h4>
+                                        </div>
+                                        <div id="situacion" class="panel-collapse collapse">
+                                            <div class="box-body">
+                                                <div class="row">
+                                                    <div class="col-md-10 col-md-offset-1">
+                                                        <div class="col-md-12">
+                                                            <div class="row">
+                                                                <div class="col-md-12">
+                                                                    <div class="form-group">
+
+                                                                        <textarea name="evaluacion_global" id="" rows="5"
+                                                                            class="form-control"></textarea>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- /.box-body -->
+                                </div>
+                                <!-- /.box -->
+                            </div>
+                            <!-- </form> -->
+                        </div>
+                </form>
+            </div>
+        </div>
+    </div><?php }} ?>
