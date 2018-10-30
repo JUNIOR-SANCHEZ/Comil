@@ -1,13 +1,13 @@
 <?php
-class tipo_sangreModel extends Model{
+class estado_civilModel extends Model{
     public function __construct() {
         parent::__construct();
     }
     public function consulta(){
         try{
-            $sql = "";
+            $sql = "CALL estados_civil_consulta_proc()";
             $stmt = $this->_db->query($sql)->fetchAll(PDO::FETCH_ASSOC);
-            return stmt;
+            return $stmt;
         }catch(PDOException $e){
             echo $e->getMessage();
             return null;
