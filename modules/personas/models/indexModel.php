@@ -1,11 +1,11 @@
 <?php
-class tipo_sangreModel extends Model{
+class indexModel extends Model{
     public function __construct() {
         parent::__construct();
     }
     public function consulta(){
         try{
-            $sql = "";
+            $sql = "CALL personal_consulta_proc();";
             $stmt = $this->_db->query($sql)->fetchAll(PDO::FETCH_ASSOC);
             return $stmt;
         }catch(PDOException $e){

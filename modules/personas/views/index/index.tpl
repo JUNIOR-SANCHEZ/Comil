@@ -31,8 +31,8 @@
                                 <tr>
                                     <th>Id</th>
                                     <th>Nombres y Apellidos</th>
-                                    <th>Cédula</th>
-                                    <th>Engine version</th>
+                                    <th>C&eacute;dula</th>
+                                    <th>Estado</th>
                                     <th>CSS grade</th>
                                 </tr>
                             </thead>
