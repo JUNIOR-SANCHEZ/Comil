@@ -31,14 +31,10 @@
                                 <tr>
                                     <th>Id</th>
                                     <th>Nombres y Apellidos</th>
-                                    <th>C&eacute;dula</th>
-                                    <th>Estado</th>
-                                    <th>CSS grade</th>
+                                    
                                 </tr>
                             </thead>
-                            <tbody>
-                                
-                            </tbody>
+                            
                             
                         </table>
                     </div>

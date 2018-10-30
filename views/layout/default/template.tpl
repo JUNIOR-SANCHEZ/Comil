@@ -13,7 +13,7 @@
 	<link rel="stylesheet" href="{$_layoutParams.ruta_css}bootstrap.min.css">
 	<!-- Font Awesome -->
 	<link rel="stylesheet" href="{$_layoutParams.ruta_css}font-awesome.min.css">
-	<link rel="stylesheet" href="{$_layoutParams.ruta_css}ionicons.min.css">
+	<!-- <link rel="stylesheet" href="{$_layoutParams.ruta_css}ionicons.min.css"> -->
 	<!-- Plugins css -->
 	{if isset($_layoutParams.cssPlugin) && count($_layoutParams.cssPlugin)}
 	{foreach item=css from=$_layoutParams.cssPlugin}

@@ -14,8 +14,8 @@ class indexController extends personasController{
         $this->_view->assign("title","Personas");
         $this->_view->renderizar("index","personas","index");
     }
-    public function consulta_ajax()
+    public function consultar_ajax()
     {
-        json_encode($this->_sql->consulta());
+        echo json_encode($this->_sql->consulta());
     }
 }
