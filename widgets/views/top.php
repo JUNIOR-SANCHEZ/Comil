@@ -9,7 +9,6 @@
     </a>
 
     <div class="navbar-custom-menu">
-      <?php if(Session::get("autenticado")): ?>
       <ul class="nav navbar-nav">
         <li class="dropdown messages-menu">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown">
@@ -199,7 +198,8 @@
         </li>
         <li class="dropdown user user-menu">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-            <img src="dist/img/user2-160x160.jpg" class="user-image" alt="User Image">
+            <!-- <img src="dist/img/user2-160x160.jpg" class="user-image" alt="User Image"> -->
+            <i class="fa fa-user-o" aria-hidden="true"></i>
             <span class="hidden-xs">Alexander Pierce</span>
           </a>
           <ul class="dropdown-menu">
@@ -237,17 +237,6 @@
           <a href="#" data-toggle="control-sidebar"><i class="fa fa-gears"></i></a>
         </li>
       </ul>
-      <?php else: ?>
-      <form class="navbar-form navbar-left">
-        <div class="form-group">
-          <input type="text" class="form-control" placeholder="Usuario">
-        </div>
-        <div class="form-group">
-            <input type="password" class="form-control" placeholder="Contraseña">
-          </div>
-        <button type="submit" class="btn btn-default">Submit</button>
-      </form>
-      <?php endif;?>
     </div>
   </nav>
 </header>

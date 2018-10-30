@@ -84,5 +84,21 @@ $(document).ready(function() {
     });
   });
 
-  
+  $("#txtdescripcion").autocomplete({
+    source: function(request, response) {
+      var ruta = _root_ + "personas/tipo_sangre/autocomplete_ajax";
+      $.ajax({
+        url: ruta,
+        dataType: "json",
+        data: { q: request.term },
+        success: function(data) {
+          response(data);
+        }
+      });
+    },
+    minLength: 1,
+    select: function(event, ui) {
+      // alert("selecciono: "+ui.item.label);
+    }
+  });
 });

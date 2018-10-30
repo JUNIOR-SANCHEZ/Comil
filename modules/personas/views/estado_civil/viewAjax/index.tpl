@@ -12,7 +12,7 @@
             <table class="table">
                 <tr>
                     <th style="width: 10px">#</th>
-                    <th>Tipo</th>
+                    <th>Estado Civil</th>
                     <th style="width: 5px"></th>
                     <th style="width: 5px"></th>
                 </tr>
@@ -28,7 +28,7 @@
 
                     </td>
                     <td>
-                        <a href="" class="btn btn-danger btn-sm">
+                        <a data-id="{$x['id']}" class="btn btn-danger btn-sm btn-del">
                             <i class="fa fa-trash-o" aria-hidden="true"></i>
                         </a>
                     </td>

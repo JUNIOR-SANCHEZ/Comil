@@ -150,7 +150,7 @@ class View extends Smarty
     {
         if (is_array($css) && count($css)) {
             for ($i = 0; $i < count($css); $i++) {
-                $this->_cssPlugin[] = BASE_URL . "public/css/" . $js[$i] . ".css";
+                $this->_cssPlugin[] = BASE_URL . "public/css/" . $css[$i] . ".css";
             }
         } else {
             throw new Exception("El dato enviado no es un array");

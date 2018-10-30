@@ -68,13 +68,13 @@
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title">Tipo de Sangre</h4>
+                    <h4 class="modal-title">Nuevo Tipo de Sangre</h4>
                 </div>
                 <div class="modal-body">
                     <form class="form-horizontal" id="form-ins" action="{$_layoutParams.root}personas/tipo_sangre/insertar_ajax">
                         <div class="box-body">
                             <div class="form-group">
-                                <label for="inputEmail3" class="col-sm-4 control-label">Tipo de Sangre</label>
+                                <label for="inputEmail3" class="col-sm-4 control-label">Descripción</label>
                                 <div class="col-sm-8">
                                     <input type="text" name="txtdescripcion" class="form-control" id="txtdescripcion"
                                         placeholder="Descripcion">
@@ -98,7 +98,7 @@
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title">Tipo de Sangre</h4>
+                    <h4 class="modal-title">Modificar Tipo de Sangre</h4>
                 </div>
                 <div class="modal-body">
                     <form class="form-horizontal" id="form-mod" action="{$_layoutParams.root}personas/tipo_sangre/modificar_ajax">
@@ -110,7 +110,7 @@
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label for="inputEmail3" class="col-sm-4 control-label">Tipo de Sangre</label>
+                                <label for="inputEmail3" class="col-sm-4 control-label">Descripción</label>
                                 <div class="col-sm-8 ">
                                     <input type="text" name="txtdescripcion" class="form-control" id="txtdescripcion-mod"
                                         placeholder="Descripcion">

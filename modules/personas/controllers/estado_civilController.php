@@ -7,7 +7,7 @@ class estado_civilController extends personasController{
     }
     public function index()
     {
-        
+        $this->_view->setJS(array("js"));
         $paginador = new Paginador();
         $this->_view->assign("title","Estado civil");
         $this->_view->assign('consulta', $paginador->paginar($this->_sql->consulta(), false));
@@ -31,7 +31,7 @@ class estado_civilController extends personasController{
         if (!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest') {
             $result = $this->_sql->insertar($this->getText("txtdescripcion"));
             if($result > 0){
-                echo "Se registro ".$result." fila";
+                echo "Se registro ".$result." registro";
             }else{
                 echo "Error al registrar";
             }
@@ -41,11 +41,10 @@ class estado_civilController extends personasController{
     }
     public function modificar_ajax(Type $var = null)
     {
-        // print_r($_POST["txtid"]);exit;
         if (!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest') {
             $result = $this->_sql->modificar(array($this->getInt("txtid"),$this->getText("txtdescripcion")));
             if($result > 0){
-                echo "Se modifico ".$result." fila";
+                echo "Se modifico ".$result." registro";
             }else{
                 echo "Error al registrar";
             }     
@@ -58,12 +57,16 @@ class estado_civilController extends personasController{
         	if (!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest') {
                 $result = $this->_sql->eliminar($this->getInt("txtid"));
                 if($result > 0){
-                    echo "Se elimino ".$result." fila";
+                    echo "Se elimino ".$result." registro";
                 }else{
                     echo "Error al eliminar";
                 } 
             } else {
                 echo "Error Processing Request";
             }
+    }
+    public function autocomplete_ajax()
+    {
+        echo json_encode($this->_sql->autocomplete($this->getText("q")));
     }
 }

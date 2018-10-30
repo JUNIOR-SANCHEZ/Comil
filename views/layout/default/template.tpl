@@ -13,6 +13,14 @@
 	<link rel="stylesheet" href="{$_layoutParams.ruta_css}bootstrap.min.css">
 	<!-- Font Awesome -->
 	<link rel="stylesheet" href="{$_layoutParams.ruta_css}font-awesome.min.css">
+	<link rel="stylesheet" href="{$_layoutParams.ruta_css}ionicons.min.css">
+	<!-- Plugins css -->
+	{if isset($_layoutParams.cssPlugin) && count($_layoutParams.cssPlugin)}
+	{foreach item=css from=$_layoutParams.cssPlugin}
+	<link href="{$css}" rel="stylesheet">
+	{/foreach}
+	{/if}
+
 	<!-- Theme style -->
 	<link rel="stylesheet" href="{$_layoutParams.ruta_css}AdminLTE.min.css">
 	<!-- AdminLTE Skins. Choose a skin from the css/skins
@@ -22,6 +30,7 @@
 	<link rel="stylesheet" href="{$_layoutParams.ruta_css}jquery-ui.min.css">
 
 	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
+
 	<!-- RUTAS AUTOMATICAS CSS -->
 	{if isset($_layoutParams.css) && count($_layoutParams.css)}
 	{foreach item=css from=$_layoutParams.css}
@@ -43,7 +52,10 @@
 	<script src="{$_layoutParams.ruta_js}fastclick.js"></script>
 	<!-- AdminLTE App -->
 	<script src="{$_layoutParams.ruta_js}adminlte.min.js"></script>
+	<!-- Demo AdminLTE -->
 	<script src="{$_layoutParams.ruta_js}demo.js"></script>
+	<!-- SweetAlert -->
+	<script src="{$_layoutParams.ruta_js}sweetalert2.all.js"></script>
 	<script type="text/javascript">
 		var _root_ = '{$_layoutParams.root}';
 	</script>

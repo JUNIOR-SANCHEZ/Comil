@@ -1,6 +1,6 @@
 $(document).ready(function() {
   function paginacion(dato) {
-    $.post(_root_ + "/personas/tipo_sangre/consulta_ajax", dato, function(
+    $.post(_root_ + "/personas/estado_civil/consulta_ajax", dato, function(
       response
     ) {
       $("#contenedor").html("");
@@ -24,7 +24,8 @@ $(document).ready(function() {
       contentType: false,
       type: "POST",
       success: function(data) {
-        alert(data);
+        $("#modal-ins").modal("hide");
+        swal("En hora buena!", data, "success");
         $("#form-ins")[0].reset();
         var pag = "pagina=" + 1;
         paginacion(pag);
@@ -56,7 +57,7 @@ $(document).ready(function() {
       type: "POST",
       success: function(data) {
         $(".modal-mod").modal("hide");
-        alert(data);
+        swal("En hora buena!", data, "success");
         $("#form-mod")[0].reset();
         var pag = "pagina=" + 1;
         paginacion(pag);
@@ -68,7 +69,7 @@ $(document).ready(function() {
     e.preventDefault();
     var formData = new FormData();
     formData.append("txtid", $(this).attr("data-id"));
-    var ruta = _root_ + "personas/tipo_sangre/eliminar_ajax";
+    var ruta = _root_ + "personas/estado_civil/eliminar_ajax";
     $.ajax({
       url: ruta,
       data: formData,
@@ -76,7 +77,7 @@ $(document).ready(function() {
       contentType: false,
       type: "POST",
       success: function(data) {
-        alert(data);
+        swal("En hora buena!", data, "success");
         $("#form-mod")[0].reset();
         var pag = "pagina=" + 1;
         paginacion(pag);
@@ -84,5 +85,21 @@ $(document).ready(function() {
     });
   });
 
-  
+  $("#txtdescripcion").autocomplete({
+    source: function(request, response) {
+      var ruta = _root_ + "personas/estado_civil/autocomplete_ajax";
+      $.ajax({
+        url: ruta,
+        dataType: "json",
+        data: { q: request.term },
+        success: function(data) {
+          response(data);
+        }
+      });
+    },
+    minLength: 3,
+    select: function(event, ui) {
+      // alert("selecciono: "+ui.item.label);
+    }
+  });
 });

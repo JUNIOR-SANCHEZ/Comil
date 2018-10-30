@@ -42,13 +42,29 @@ class tipo_sangreModel extends Model{
     public function eliminar($id)
     {
         try{
-            $sql = "CALL tipos_sangre_eliminar(:id);";
+            $sql = "CALL tipos_sangre_eliminar_proc(:id);";
             $stmt = $this->_db->prepare($sql);
             $result = $stmt->execute(array(":id"=>$id));
             return $result;
         }catch(PDOException $e){
             echo $e->getMessage();
             return 0;
+        }
+    }
+    public function autocomplete($dato){
+        try{
+            $sql = "CALL tipos_sangre_autocomplete_proc(:data)";
+            $stmt = $this->_db->prepare($sql);
+            $stmt->execute(array(":data"=>$dato));
+            $result = $stmt->fetchAll(PDO::FETCH_NUM);
+            $array = array();
+            foreach($result as $row){
+                $array[] = $row[0];
+            }
+            return $array;
+        }catch(PDOException $e){
+            echo $e->getMessage();
+            return null;
         }
     }
 }

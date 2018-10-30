@@ -29,6 +29,12 @@ class menuModelWidget extends Model
                     "icon" => " fa-circle-o",
                     "link" => BASE_URL . "personas/estado_civil",
                 ),
+                array(
+                    "id" => "index",
+                    "title" => "Personas",
+                    "icon" => " fa-circle-o",
+                    "link" => BASE_URL . "personas/",
+                ),
             ),
         );
 
