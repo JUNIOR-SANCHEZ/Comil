@@ -12,6 +12,14 @@
 <section class="content">
     <div class="row">
         <div class="col-sm-12">
+            <a href="{$_layoutParams.root}personas/index/exel" class="btn btn-info">
+                <i class="fa fa-file-excel-o" aria-hidden="true"></i>
+                EXEL
+            </a>
+            <button type="button" class="btn btn-info" data-toggle="modal" data-target="#modal-ins">
+                <i class="fa fa-file-pdf-o" aria-hidden="true"></i>
+                PDF
+            </button>
             <button type="button" class="btn btn-primary pull-right" data-toggle="modal" data-target="#modal-ins">
                 <i class="fa fa-plus" aria-hidden="true"></i>
                 Nuevo Tipo
@@ -22,21 +30,62 @@
             <div class="col-sm-12">
                 <div class="box">
                     <div class="box-header">
-                        <h3 class="box-title">Hover Data Table</h3>
+                        <h3 class="box-title">Listado de Personas</h3>
+                        <div class="box-tools">
+                            <div class="input-group input-group-sm" style="width: 150px;">
+                                <input type="text" name="table_search" class="form-control pull-right" placeholder="Search">
+
+                                <div class="input-group-btn">
+                                    <button type="submit" class="btn btn-default"><i class="fa fa-search"></i></button>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                     <!-- /.box-header -->
                     <div class="box-body">
                         <table id="example2" class="table table-bordered table-hover">
                             <thead>
                                 <tr>
-                                    <th>Id</th>
+                                    <th style="width: 20px;">Id</th>
                                     <th>Nombres y Apellidos</th>
-                                    
+                                    <th>C&eacute;dula</th>
+                                    <th>Direcci&oacute;n</th>
+                                    <th>Correo</th>
+                                    <th>Correo Institucional</th>
+                                    <th>Tel&eacute;fono</th>
+                                    <th>Estado</th>
+
+
                                 </tr>
                             </thead>
-                            
-                            
+                            <tbody>
+                                {foreach item=x from=$consulta}
+                                <tr>
+                                    <td>{$x["id"]}</td>
+                                    <td>{$x["name"]} {$x["lastname"]}</td>
+                                    <td>{$x["card"]}</td>
+                                    <td>{$x["address"]}</td>
+                                    <td>{$x["email"]}</td>
+                                    <td>{$x["email2"]}</td>
+                                    <td>{$x["phone"]}</td>
+                                    <td>
+                                        {if $x["state"]==1}
+                                        <span class="label label-success">Activo</span>
+                                        {else}
+                                        <span class="label label-danger">Inactivo</span>
+                                        {/if}
+                                    </td>
+                                </tr>
+                                {/foreach}
+                            </tbody>
+
+
                         </table>
+                    </div>
+                    <div class="box-footer clearfix">
+                        <ul class="pagination pagination-sm no-margin pull-right">
+                            {if isset($paginador)}{$paginador}{/if}
+                        </ul>
                     </div>
                     <!-- /.box-body -->
                 </div>

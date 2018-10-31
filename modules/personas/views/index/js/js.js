@@ -1,10 +1,16 @@
-$(document).ready(function () {
-  
-  $("#example2").DataTable({
-    "ajax": _root_+"personas/index/consultar_ajax",
-    "columns": [
-      { "data": "name" },
-      { "data": "id" }
-    ]
+$(document).ready(function() {
+  function paginacion(dato) {
+    $.post(
+      _root_ + "compras/proveedores/consulta_paginacion_ajax",
+      dato,
+      function(response) {
+        $("#contenedor").html("");
+        $("#contenedor").html(response);
+      }
+    );
+  }
+  $(document).delegate(".pagina", "click", function() {
+    var pag = "pagina=" + $(this).attr("pagina");
+    paginacion(pag);
   });
 });
