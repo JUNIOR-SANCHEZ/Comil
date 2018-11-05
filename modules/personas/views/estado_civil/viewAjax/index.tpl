@@ -21,17 +21,18 @@
                     <td>{$x["id"]}</td>
                     <td class="td-descripcion">{$x["description"]}</td>
                     <td>
+                        <a data-id="{$x['id']}" class=" btn-del">
+                            {if $x["status"] == 1}<span class="label label-success">activo</span>{else}<span class="label label-danger">Inactivo</span>{/if}
+                        </a>
+                    </td>
+                    <td>
                         <a class="btn-id btn btn-warning  btn-sm" data-id="{$x['id']}" data-toggle="modal" data-target=".modal-mod">
                             <i class="fa fa-edit"></i>
 
                         </a>
 
                     </td>
-                    <td>
-                        <a data-id="{$x['id']}" class="btn btn-danger btn-sm btn-del">
-                            <i class="fa fa-trash-o" aria-hidden="true"></i>
-                        </a>
-                    </td>
+
                 </tr>
                 {/foreach}
             </table>

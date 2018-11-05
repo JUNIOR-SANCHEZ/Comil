@@ -1,4 +1,7 @@
 <?php
+/**
+ * TODO: CREA, LEE, ACTUALIZA, LOS REGISTROS DE UNA PERSONA
+ */
 class indexController extends personasController{
     private $_sql;
     public function __construct() {
@@ -9,11 +12,14 @@ class indexController extends personasController{
     }
     public function index()
     {
-        // print_r($this->_sql->consulta());exit;
+        
         $this->_view->setJS(array("js"));
         $paginador = new Paginador();
         $this->_view->assign("title","Personas");
         $this->_view->assign('consulta', $paginador->paginar($this->_sql->consulta()));
+        $this->_view->assign('civil',$this->_sql->civilstatus());
+        $this->_view->assign('gender',$this->_sql->gender());
+        $this->_view->assign('blood',$this->_sql->blood());
         $this->_view->assign('paginador', $paginador->getView('paginacion_ajax'));
         $this->_view->renderizar("index","personas","index");
     }
@@ -29,12 +35,16 @@ class indexController extends personasController{
             echo "Error Processing Request";
         }
     }
+    public function insertar_ajax()
+    {
+        if (!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest') {
+           
+        } else {
+            echo "Error Processing Request";
+        }
+    }
     public function exel()
     {
-        ob_start();
-        require_once ROOT . "public" . DS . "files" . DS . "excelreport" . DS . "personal_excel.php";
-        ob_end_clean();
-         
 
     }
 }

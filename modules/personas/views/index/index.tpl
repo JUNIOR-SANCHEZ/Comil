@@ -98,16 +98,83 @@
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title">Nuevo Estado Civil</h4>
+                    <h4 class="modal-title">Nueva Persona</h4>
                 </div>
                 <div class="modal-body">
-                    <form class="form-horizontal" id="form-ins" action="{$_layoutParams.root}personas/estado_civil/insertar_ajax">
+                    <form class="form-horizontal" id="form-ins" action="{$_layoutParams.root}personas/index/insertar_ajax">
                         <div class="box-body">
                             <div class="form-group">
-                                <label for="inputEmail3" class="col-sm-4 control-label">Descripcià¸£à¸“n</label>
+                                <label for="inputEmail3" class="col-sm-4 control-label">Nombre:</label>
                                 <div class="col-sm-8">
-                                    <input type="text" name="txtdescripcion" class="form-control" id="txtdescripcion"
-                                        placeholder="Descripcion">
+                                    <input type="text" name="txtname" class="form-control" id="name-ins" placeholder="Nombre">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="inputEmail3" class="col-sm-4 control-label">Apellido:</label>
+                                <div class="col-sm-8">
+                                    <input type="text" name="txtlastname" class="form-control" id="lastname-ins"
+                                        placeholder="Apellido">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="inputEmail3" class="col-sm-4 control-label">Cedula:</label>
+                                <div class="col-sm-8">
+                                    <input type="text" name="txtcard" class="form-control" id="card-ins" placeholder="Cedula">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="inputEmail3" class="col-sm-4 control-label">Estado Civil:</label>
+                                <div class="col-sm-8">
+                                    <select name="cb_civil" class="form-control form-custom" id="civil-ins">
+                                        <option value="0">Seleccione uno:</option>
+                                        {foreach item=x from=$civil}
+                                        <option value="{$x['description']}">{$x['description']}</option>
+                                        {/foreach}
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="inputEmail3" class="col-sm-4 control-label">Tipo de Sangre:</label>
+                                <div class="col-sm-8">
+                                    <select name="cb_blod" class="form-control form-custom" id="blood-ins">
+                                        <option value="0">Seleccione uno:</option>
+                                        {foreach item=x from=$blood}
+                                        <option value="{$x['description']}">{$x['description']}</option>
+                                        {/foreach}
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="inputEmail3" class="col-sm-4 control-label">Dirección:</label>
+                                <div class="col-sm-8">
+                                    <input type="text" name="txtcaddress" class="form-control" id="address-ins"
+                                        placeholder="Dirección">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="inputEmail3" class="col-sm-4 control-label">Email:</label>
+                                <div class="col-sm-8">
+                                    <input type="email" name="txtemail1" class="form-control" id="email1-ins"
+                                        placeholder="Email">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="inputEmail3" class="col-sm-4 control-label">Correo Institucional:</label>
+                                <div class="col-sm-8">
+                                    <input type="email" name="txtemail2" class="form-control" id="email2-ins"
+                                        placeholder="Correo Institucional">
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="inputEmail3" class="col-sm-4 control-label">Género:</label>
+                                <div class="col-sm-8">
+                                    <select name="cb_gender" class="form-control form-custom" id="gender-ins">
+                                        <option value="0">Seleccione uno:</option>
+                                        {foreach item=x from=$gender}
+                                        <option value="{$x['description']}">{$x['description']}</option>
+                                        {/foreach}
+                                    </select>
                                 </div>
                             </div>
                         </div>

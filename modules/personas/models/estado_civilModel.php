@@ -5,7 +5,7 @@ class estado_civilModel extends Model{
     }
     public function consulta(){
         try{
-            $sql = "CALL estados_civil_consulta_proc()";
+            $sql = "CALL estados_civil_proc('consulta',null,null,null);";
             $stmt = $this->_db->query($sql)->fetchAll(PDO::FETCH_ASSOC);
             return $stmt;
         }catch(PDOException $e){
@@ -13,11 +13,11 @@ class estado_civilModel extends Model{
             return null;
         }
     }
-    public function insertar($dato){
+    public function insertar($description){
         try{
-            $sql = "CALL estados_civil_insertar_proc(:data);";
+            $sql = "CALL estados_civil_proc('insertar',null,:description,null);";
             $stmt = $this->_db->prepare($sql);
-            $result = $stmt->execute(array(":data"=>$dato));
+            $result = $stmt->execute(array(":description"=>$dato));
             return $result;
         }catch(PDOException $e){
             echo $e->getMessage();
@@ -26,18 +26,18 @@ class estado_civilModel extends Model{
     }
     public function modificar($dato){
         try{
-            $sql = "CALL estados_civil_modificar_proc(:id,:data);";
+            $sql = "CALL estados_civil_proc('modificar',:id,:description,null);";
             $stmt = $this->_db->prepare($sql);
-            $result = $stmt->execute(array(":id"=>$dato[0],":data"=>$dato[1]));
+            $result = $stmt->execute(array(":id"=>$dato[0],":description"=>$dato[1]));
             return $result;
         }catch(PDOException $e){
             echo $e->getMessage();
             return 0;
         }
     }
-    public function eliminar($id){
+    public function estado($id){
         try{
-            $sql = "CALL estados_civil_eliminar_proc(:id);";
+            $sql = "CALL estados_civil_proc('estado',:id,null,null);";
             $stmt = $this->_db->prepare($sql);
             $result = $stmt->execute(array(":id"=>$id));
             return $result;

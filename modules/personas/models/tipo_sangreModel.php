@@ -3,10 +3,13 @@ class tipo_sangreModel extends Model{
     public function __construct() {
         parent::__construct();
     }
+    /**
+     * TODO: CRUD PARA EL REGISTRO DEL TIPO DE SANGRE DE LA PERSONA 
+     */
     public function consulta()
     {
         try{
-            $sql = "CALL tipos_sangre_consulta_proc();";
+            $sql = "CALL tipos_sangre_proc('consulta',NULL,NULL,NULL);";
             $stmt = $this->_db->query($sql)->fetchAll(PDO::FETCH_ASSOC);
             return $stmt;
 
@@ -15,12 +18,12 @@ class tipo_sangreModel extends Model{
             return null;
         }
     }
-    public function insertar($dato)
+    public function insertar($description)
     {
         try{
-            $sql = "CALL tipos_sangre_insertar_proc(:desc)";
+            $sql = "CALL tipos_sangre_proc('consulta',NULL,:description,NULL);";
             $stmt = $this->_db->prepare($sql);
-            $result = $stmt->execute(array(":desc"=>$dato));
+            $result = $stmt->execute(array(":description"=>$description));
             return $result;
         }catch(PDOException $e){
             echo $e->getMessage();
@@ -30,9 +33,9 @@ class tipo_sangreModel extends Model{
     public function modificar($dato)
     {
         try{
-            $sql = "CALL tipos_sangre_modificar(:id,:des);";
+            $sql = "CALL tipos_sangre_proc('consulta',:id,:description,NULL);";
             $stmt = $this->_db->prepare($sql);
-            $result = $stmt->execute(array(":id"=>$dato[0],":des"=>$dato[1]));
+            $result = $stmt->execute(array(":id"=>$dato[0],":description"=>$dato[1]));
             return $result;
         }catch(PDOException $e){
             echo $e->getMessage()."<br>";
@@ -42,7 +45,7 @@ class tipo_sangreModel extends Model{
     public function eliminar($id)
     {
         try{
-            $sql = "CALL tipos_sangre_eliminar_proc(:id);";
+            $sql = "CALL tipos_sangre_proc('estado',:id,NULL,NULL);";
             $stmt = $this->_db->prepare($sql);
             $result = $stmt->execute(array(":id"=>$id));
             return $result;
@@ -51,6 +54,10 @@ class tipo_sangreModel extends Model{
             return 0;
         }
     }
+
+    /**
+     * FIXME: ELIMINAR FUNCION NO SE VA A UTILIZAR
+     */
     public function autocomplete($dato){
         try{
             $sql = "CALL tipos_sangre_autocomplete_proc(:data)";

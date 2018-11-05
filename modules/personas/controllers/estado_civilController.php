@@ -55,11 +55,11 @@ class estado_civilController extends personasController{
     public function eliminar_ajax()
     {
         	if (!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest') {
-                $result = $this->_sql->eliminar($this->getInt("txtid"));
+                $result = $this->_sql->estado($this->getInt("txtid"));
                 if($result > 0){
-                    echo "Se elimino ".$result." registro";
+                    echo "Se actualizo ".$result." registro";
                 }else{
-                    echo "Error al eliminar";
+                    echo "Error al actualizar";
                 } 
             } else {
                 echo "Error Processing Request";

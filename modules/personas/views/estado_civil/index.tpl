@@ -42,6 +42,12 @@
                                 <td>{$x["id"]}</td>
                                 <td class="td-descripcion">{$x["description"]}</td>
                                 <td>
+                                    <a data-id="{$x['id']}" class=" btn-del">
+                                        {if $x["status"] == 1}<span class="label label-success">activo</span>{else}<span
+                                            class="label label-danger">Inactivo</span>{/if}
+                                    </a>
+                                </td>
+                                <td>
                                     <a class="btn-id btn btn-warning  btn-sm" data-id="{$x['id']}" data-toggle="modal"
                                         data-target=".modal-mod">
                                         <i class="fa fa-edit"></i>
@@ -49,11 +55,7 @@
                                     </a>
 
                                 </td>
-                                <td>
-                                    <a data-id="{$x['id']}" class="btn btn-danger btn-sm btn-del">
-                                        <i class="fa fa-trash-o" aria-hidden="true"></i>
-                                    </a>
-                                </td>
+
                             </tr>
                             {/foreach}
                         </table>
@@ -103,12 +105,13 @@
                 <div class="modal-body">
                     <form class="form-horizontal" id="form-mod" action="{$_layoutParams.root}personas/estado_civil/modificar_ajax">
                         <div class="box-body">
-                            <div class="form-group">
+                            <input type="hidden" name="txtid" id="txtid-mod">
+                            <!-- <div class="form-group">
                                 <label for="inputEmail3" class="col-sm-4 control-label">Id</label>
                                 <div class="col-sm-2 pull-right">
-                                    <input type="number" name="txtid" class="form-control " id="txtid-mod">
+                                    <input type="number"  class="form-control " >
                                 </div>
-                            </div>
+                            </div> -->
                             <div class="form-group">
                                 <label for="inputEmail3" class="col-sm-4 control-label">Descripci?n</label>
                                 <div class="col-sm-8 ">

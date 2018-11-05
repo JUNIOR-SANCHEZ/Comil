@@ -6,7 +6,6 @@ ini_set('display_errors', TRUE);
 ini_set('display_startup_errors', TRUE);
 date_default_timezone_set('Europe/London');
 
-echo "hola";
 if (PHP_SAPI == 'cli')
 	die('This example should only be run from a Web Browser');
 
@@ -44,8 +43,9 @@ $objPHPExcel->getActiveSheet()->setTitle('Lista del personal');
 // Set active sheet index to the first sheet, so Excel opens this as the first sheet
 $objPHPExcel->setActiveSheetIndex(0);
 
-$objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel2007');
 
+
+header('Content-type: text/html; charset=utf8');
 // Redirect output to a client’s web browser (Excel2007)
 header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
 header('Content-Disposition: attachment;filename="01simple.xlsx"');
@@ -61,5 +61,6 @@ header ('Pragma: public'); // HTTP/1.0
 file_put_contents('depuracion.txt', ob_get_contents());
 /* Limpiamos el búfer */
 ob_end_clean();
+$objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel2007');
 $objWriter->save('PHP://output');
 exit;
