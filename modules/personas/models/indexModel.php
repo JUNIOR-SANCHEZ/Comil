@@ -13,6 +13,19 @@ class indexModel extends Model{
             return $error;
         }
     }
+    public function consultaid($id)
+    {
+        try{
+            $sql = "CALL personal_proc('consultaid',:id,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);";
+            $stmt = $this->_db->prepare($sql);
+            $stmt->execute(array(":id"=>$id));
+            $result = $stmt->fetch(PDO::FETCH_ASSOC);
+            return $result;
+        }catch(PDOException $e){
+            $error = $e->getMessage();
+            return $error;
+        }
+    }
     public function civilstatus()
     {
         try{
@@ -48,18 +61,18 @@ class indexModel extends Model{
             return null;
         }
     }
-    public function insertar($dato){
+    public function insertar(array $dato){
         try{
-            $sql = "CALL personal_proc('insertar',NULL,:name,:lastname,:address,:email1,:email2,:phone,:mobile,:birthdate,:blood,:gender,:civil,NULL);";
+            $sql = "CALL personal_proc('insertar',NULL,:name,:lastname,:card,:address,:email1,:email2,:phone,:birthdate,:blood,:gender,:civil,NULL);";
             $stmt = $this->_db->prepare($sql);
             $result = $stmt->execute(array(
                 ":name"=>$dato[0],
                 ":lastname"=>$dato[1],
-                ":address"=>$dato[2],
-                ":email1"=>$dato[3],
-                ":email2"=>$dato[4],
-                ":phone"=>$dato[5],
-                ":mobile"=>$dato[6],
+                ":card"=>$dato[2],
+                ":address"=>$dato[3],
+                ":email1"=>$dato[4],
+                ":email2"=>$dato[5],
+                ":phone"=>$dato[6],
                 ":birthdate"=>$dato[7],
                 ":blood"=>$dato[8],
                 ":gender"=>$dato[9],
@@ -71,18 +84,18 @@ class indexModel extends Model{
             return $error;
         }
     }
-    public function modificar($dato){
+    public function modificar(array $dato){
         try{
-            $sql = "CALL personal_proc('modificar',:id,:name,:lastname,:address,:email1,:email2,:phone,:mobile,:birthdate,:blood,:gender,:civil,NULL);";
+            $sql = "CALL personal_proc('modificar',:id,:name,:lastname,:card,:address,:email1,:email2,:phone,:birthdate,:blood,:gender,:civil,NULL);";
             $stmt = $this->_db->prepare($sql);
             $result = $stmt->execute(array(
                 ":name"=>$dato[0],
                 ":lastname"=>$dato[1],
-                ":address"=>$dato[2],
-                ":email1"=>$dato[3],
-                ":email2"=>$dato[4],
-                ":phone"=>$dato[5],
-                ":mobile"=>$dato[6],
+                ":card"=>$dato[2],
+                ":address"=>$dato[3],
+                ":email1"=>$dato[4],
+                ":email2"=>$dato[5],
+                ":phone"=>$dato[6],
                 ":birthdate"=>$dato[7],
                 ":blood"=>$dato[8],
                 ":gender"=>$dato[9],

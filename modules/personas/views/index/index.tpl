@@ -16,7 +16,7 @@
                 <i class="fa fa-file-excel-o" aria-hidden="true"></i>
                 EXEL
             </a>
-            <button type="button" class="btn btn-info" data-toggle="modal" data-target="#modal-ins">
+            <button type="button" class="btn btn-info">
                 <i class="fa fa-file-pdf-o" aria-hidden="true"></i>
                 PDF
             </button>
@@ -64,17 +64,24 @@
                                     <td>{$x["id"]}</td>
                                     <td>{$x["name"]} {$x["lastname"]}</td>
                                     <td>{$x["card"]}</td>
+                                    <td>
+                                        {if $x["state"]==1}
+                                        <label class="label label-success btn-estado">Activo</label>
+                                        {else}
+                                        <label class="label label-danger btn-estado">Inactivo</label>
+                                        {/if}
+                                    </td>
                                     <td>{$x["address"]}</td>
                                     <td>{$x["email"]}</td>
                                     <td>{$x["email2"]}</td>
                                     <td>{$x["phone"]}</td>
                                     <td>
-                                        {if $x["state"]==1}
-                                        <span class="label label-success">Activo</span>
-                                        {else}
-                                        <span class="label label-danger">Inactivo</span>
-                                        {/if}
+                                        <a data-ruta="{$_layoutParams.root}personas/index/consultaid_ajax/{$x['id']}"
+                                            class="btn btn-link btn-per" data-toggle="modal" data-target="#modal-mod">
+                                            <i class="fa fa-edit"></i>
+                                        </a>
                                     </td>
+
                                 </tr>
                                 {/foreach}
                             </tbody>
@@ -104,22 +111,30 @@
                     <form class="form-horizontal" id="form-ins" action="{$_layoutParams.root}personas/index/insertar_ajax">
                         <div class="box-body">
                             <div class="form-group">
-                                <label for="inputEmail3" class="col-sm-4 control-label">Nombre:</label>
+                                <label for="inputEmail3" class="col-sm-4 control-label">{utf8_encode('Nombre')}:</label>
                                 <div class="col-sm-8">
-                                    <input type="text" name="txtname" class="form-control" id="name-ins" placeholder="Nombre">
+                                    <input type="text" name="txtname" class="form-control" id="name-ins" placeholder="{utf8_encode('Nombre')}">
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label for="inputEmail3" class="col-sm-4 control-label">Apellido:</label>
+                                <label for="inputEmail3" class="col-sm-4 control-label">{utf8_encode('Apellido')}:</label>
                                 <div class="col-sm-8">
                                     <input type="text" name="txtlastname" class="form-control" id="lastname-ins"
-                                        placeholder="Apellido">
+                                        placeholder="{utf8_encode('Apellido')}">
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label for="inputEmail3" class="col-sm-4 control-label">Cedula:</label>
+                                <label for="inputEmail3" class="col-sm-4 control-label">{utf8_encode('Fecha de
+                                    Nacimiento')}:</label>
                                 <div class="col-sm-8">
-                                    <input type="text" name="txtcard" class="form-control" id="card-ins" placeholder="Cedula">
+                                    <input type="email" name="txtbirthdate" class="form-control" id="birthdate-ins"
+                                        placeholder="{utf8_encode('Fecha de Nacimiento')}">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="inputEmail3" class="col-sm-4 control-label">{utf8_encode('Cedula')}:</label>
+                                <div class="col-sm-8">
+                                    <input type="text" name="txtcard" class="form-control" id="card-ins" placeholder="{utf8_encode('Cedula')}">
                                 </div>
                             </div>
                             <div class="form-group">
@@ -128,7 +143,7 @@
                                     <select name="cb_civil" class="form-control form-custom" id="civil-ins">
                                         <option value="0">Seleccione uno:</option>
                                         {foreach item=x from=$civil}
-                                        <option value="{$x['description']}">{$x['description']}</option>
+                                        <option value="{$x['id']}">{$x['description']}</option>
                                         {/foreach}
                                     </select>
                                 </div>
@@ -139,16 +154,16 @@
                                     <select name="cb_blod" class="form-control form-custom" id="blood-ins">
                                         <option value="0">Seleccione uno:</option>
                                         {foreach item=x from=$blood}
-                                        <option value="{$x['description']}">{$x['description']}</option>
+                                        <option value="{$x['id']}">{$x['description']}</option>
                                         {/foreach}
                                     </select>
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label for="inputEmail3" class="col-sm-4 control-label">Dirección:</label>
+                                <label for="inputEmail3" class="col-sm-4 control-label">{utf8_encode('Dirección:')}</label>
                                 <div class="col-sm-8">
-                                    <input type="text" name="txtcaddress" class="form-control" id="address-ins"
-                                        placeholder="Dirección">
+                                    <input type="text" name="txtaddress" class="form-control" id="address-ins"
+                                        placeholder="{utf8_encode('Dirección')}">
                                 </div>
                             </div>
                             <div class="form-group">
@@ -167,14 +182,20 @@
                             </div>
 
                             <div class="form-group">
-                                <label for="inputEmail3" class="col-sm-4 control-label">Género:</label>
+                                <label for="inputEmail3" class="col-sm-4 control-label">{utf8_encode('Género:')}</label>
                                 <div class="col-sm-8">
                                     <select name="cb_gender" class="form-control form-custom" id="gender-ins">
                                         <option value="0">Seleccione uno:</option>
                                         {foreach item=x from=$gender}
-                                        <option value="{$x['description']}">{$x['description']}</option>
+                                        <option value="{$x['id']}">{$x['description']}</option>
                                         {/foreach}
                                     </select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="inputEmail3" class="col-sm-4 control-label">{utf8_encode('Teléfono')}:</label>
+                                <div class="col-sm-8">
+                                    <input type="email" name="txtphone" class="form-control" id="phone-ins" placeholder="{utf8_encode('Teléfono')}">
                                 </div>
                             </div>
                         </div>
@@ -189,7 +210,7 @@
             </div>
         </div>
     </div>
-    <div class="modal fade modal-mod">
+    <div class="modal fade" id="modal-mod">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
@@ -198,19 +219,95 @@
                     <h4 class="modal-title">Modificar Estado Civil</h4>
                 </div>
                 <div class="modal-body">
-                    <form class="form-horizontal" id="form-mod" action="{$_layoutParams.root}personas/estado_civil/modificar_ajax">
+                    <form class="form-horizontal" id="form-mod" action="{$_layoutParams.root}personas/index/modificar_ajax">
+                        <input type="hidden" name="id-pers" value="0" id="id-mod">
                         <div class="box-body">
                             <div class="form-group">
-                                <label for="inputEmail3" class="col-sm-4 control-label">Id</label>
-                                <div class="col-sm-2 pull-right">
-                                    <input type="number" name="txtid" class="form-control " id="txtid-mod">
+                                <label for="inputEmail3" class="col-sm-4 control-label">{utf8_encode('Nombre')}:</label>
+                                <div class="col-sm-8">
+                                    <input type="text" name="txtname" class="form-control" id="name-mod" placeholder="{utf8_encode('Nombre')}">
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label for="inputEmail3" class="col-sm-4 control-label">Descripción</label>
-                                <div class="col-sm-8 ">
-                                    <input type="text" name="txtdescripcion" class="form-control" id="txtdescripcion-mod"
-                                        placeholder="Descripcion">
+                                <label for="inputEmail3" class="col-sm-4 control-label">{utf8_encode('Apellido')}:</label>
+                                <div class="col-sm-8">
+                                    <input type="text" name="txtlastname" class="form-control" id="lastname-mod"
+                                        placeholder="{utf8_encode('Apellido')}">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="inputEmail3" class="col-sm-4 control-label">{utf8_encode('Fecha de
+                                    Nacimiento')}:</label>
+                                <div class="col-sm-8">
+                                    <input type="email" name="txtbirthdate" class="form-control" id="birthdate-mod"
+                                        placeholder="{utf8_encode('Fecha de Nacimiento')}">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="inputEmail3" class="col-sm-4 control-label">{utf8_encode('Cedula')}:</label>
+                                <div class="col-sm-8">
+                                    <input type="text" name="txtcard" class="form-control" id="card-mod" placeholder="{utf8_encode('Cedula')}">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="inputEmail3" class="col-sm-4 control-label">Estado Civil:</label>
+                                <div class="col-sm-8">
+                                    <select name="cb_civil" class="form-control form-custom" id="civil-mod">
+                                        <option value="0">Seleccione uno:</option>
+                                        {foreach item=x from=$civil}
+                                        <option value="{$x['id']}">{$x['description']}</option>
+                                        {/foreach}
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="inputEmail3" class="col-sm-4 control-label">Tipo de Sangre:</label>
+                                <div class="col-sm-8">
+                                    <select name="cb_blod" class="form-control form-custom" id="blood-mod">
+                                        <option value="0">Seleccione uno:</option>
+                                        {foreach item=x from=$blood}
+                                        <option value="{$x['id']}">{$x['description']}</option>
+                                        {/foreach}
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="inputEmail3" class="col-sm-4 control-label">{utf8_encode('Dirección:')}</label>
+                                <div class="col-sm-8">
+                                    <input type="text" name="txtaddress" class="form-control" id="address-mod"
+                                        placeholder="{utf8_encode('Dirección')}">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="inputEmail3" class="col-sm-4 control-label">Email:</label>
+                                <div class="col-sm-8">
+                                    <input type="email" name="txtemail1" class="form-control" id="email1-mod"
+                                        placeholder="Email">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="inputEmail3" class="col-sm-4 control-label">Correo Institucional:</label>
+                                <div class="col-sm-8">
+                                    <input type="email" name="txtemail2" class="form-control" id="email2-mod"
+                                        placeholder="Correo Institucional">
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="inputEmail3" class="col-sm-4 control-label">{utf8_encode('Género:')}</label>
+                                <div class="col-sm-8">
+                                    <select name="cb_gender" class="form-control form-custom" id="gender-mod">
+                                        <option value="0">Seleccione uno:</option>
+                                        {foreach item=x from=$gender}
+                                        <option value="{$x['id']}">{$x['description']}</option>
+                                        {/foreach}
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="inputEmail3" class="col-sm-4 control-label">{utf8_encode('Teléfono')}:</label>
+                                <div class="col-sm-8">
+                                    <input type="email" name="txtphone" class="form-control" id="phone-mod" placeholder="{utf8_encode('Teléfono')}">
                                 </div>
                             </div>
                         </div>

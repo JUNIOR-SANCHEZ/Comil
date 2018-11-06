@@ -7,8 +7,8 @@ class indexController extends personasController{
     public function __construct() {
         parent::__construct();
         $this->_sql = $this->loadModel("index");
-        $this->_view->setCssPlugin(array("dataTables.bootstrap"));
-        $this->_view->setJsPlugin(array("jquery.dataTables","dataTables.bootstrap"));
+        // $this->_view->setCssPlugin(array("dataTables.bootstrap"));
+        // $this->_view->setJsPlugin(array("jquery.dataTables","dataTables.bootstrap"));
     }
     public function index()
     {
@@ -35,10 +35,38 @@ class indexController extends personasController{
             echo "Error Processing Request";
         }
     }
+    public function consultaid_ajax($id)
+    {
+        if (!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest') {
+            echo json_encode($this->_sql->consultaid($id));
+        } else {
+            echo "Error Processing Request";
+        }
+    }
     public function insertar_ajax()
     {
         if (!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest') {
-           
+            $result = $this->_sql->insertar(
+                array(
+                    $this->getText("txtname"),
+                    $this->getText("txtlastname"),
+                    $this->getText("txtcard"),
+                    $this->getText("txtaddress"),
+                    $this->getText("txtemail"),
+                    $this->getText("txtemail2"),
+                    $this->getText("txtphone"),
+                    $this->getText("txtbirthdate"),
+                    $this->getInt("cb_blod"),
+                    $this->getInt("cb_gender"),
+                    $this->getInt("cb_civil")
+                )
+            );
+            if($result == 0){
+                echo json_encode(array("error"=>"No se pudo registrar " . $result .  $this->getInt('cb_civil') ));
+                exit;
+            }
+            echo json_encode("Se registro ". $result . "fila");
+            exit;
         } else {
             echo "Error Processing Request";
         }
