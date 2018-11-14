@@ -100,7 +100,7 @@ class indexModel extends Model{
                 ":blood"=>$dato[8],
                 ":gender"=>$dato[9],
                 ":civil"=>$dato[10],
-                ":id"=>$dato[11]
+                ":id"=>$dato[11] 
             ));
             return $result;
         }catch(PDOException $e){

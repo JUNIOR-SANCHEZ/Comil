@@ -48,14 +48,12 @@
                                 <tr>
                                     <th style="width: 20px;">Id</th>
                                     <th>Nombres y Apellidos</th>
-                                    <th>C&eacute;dula</th>
-                                    <th>Direcci&oacute;n</th>
+                                    <th>{utf8_encode('Cédula')}</th>
+                                    <th>Estado</th>
+                                    <th>{utf8_encode('Dirección')}</th>
                                     <th>Correo</th>
                                     <th>Correo Institucional</th>
-                                    <th>Tel&eacute;fono</th>
-                                    <th>Estado</th>
-
-
+                                    <th>{utf8_encode('Teléfono')}</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -85,8 +83,6 @@
                                 </tr>
                                 {/foreach}
                             </tbody>
-
-
                         </table>
                     </div>
                     <div class="box-footer clearfix">
@@ -220,7 +216,7 @@
                 </div>
                 <div class="modal-body">
                     <form class="form-horizontal" id="form-mod" action="{$_layoutParams.root}personas/index/modificar_ajax">
-                        <input type="hidden" name="id-pers" value="0" id="id-mod">
+                        <input type="hidden" name="id" value="0" id="id">
                         <div class="box-body">
                             <div class="form-group">
                                 <label for="inputEmail3" class="col-sm-4 control-label">{utf8_encode('Nombre')}:</label>

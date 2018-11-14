@@ -94,24 +94,6 @@ CREATE TABLE `estados_civiles` (
 
 insert  into `estados_civiles`(`id_s_civil`,`descripcion_s_civil`,`estado_s_civil`) values (1,'Soltero(a)',1),(2,'Casado(a)',1),(3,'Divorciado(a)',0),(4,'Viudo(a)',0);
 
-/*Table structure for table `fecha_permisos` */
-
-DROP TABLE IF EXISTS `fecha_permisos`;
-
-CREATE TABLE `fecha_permisos` (
-  `id_fecha_permisos` int(11) NOT NULL AUTO_INCREMENT,
-  `fecha` date NOT NULL,
-  `numero` int(11) NOT NULL,
-  `solicitud_permiso` int(11) NOT NULL,
-  PRIMARY KEY (`id_fecha_permisos`),
-  KEY `s_p_f` (`solicitud_permiso`),
-  CONSTRAINT `s_p_f` FOREIGN KEY (`solicitud_permiso`) REFERENCES `solicitud_permisos` (`id_solicitud_permisos`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci;
-
-/*Data for the table `fecha_permisos` */
-
-insert  into `fecha_permisos`(`id_fecha_permisos`,`fecha`,`numero`,`solicitud_permiso`) values (6,'2018-09-01',8,31),(7,'2018-08-31',2,33);
-
 /*Table structure for table `generos` */
 
 DROP TABLE IF EXISTS `generos`;
@@ -142,25 +124,6 @@ CREATE TABLE `hoja_vida_equipos` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci;
 
 /*Data for the table `hoja_vida_equipos` */
-
-/*Table structure for table `horas_permiso` */
-
-DROP TABLE IF EXISTS `horas_permiso`;
-
-CREATE TABLE `horas_permiso` (
-  `id_horas_permiso` int(11) NOT NULL AUTO_INCREMENT,
-  `fecha` date NOT NULL,
-  `hora_salida` time NOT NULL,
-  `hora_entrada` time NOT NULL,
-  `solicitud_permiso` int(11) NOT NULL,
-  PRIMARY KEY (`id_horas_permiso`),
-  KEY `s_p_h` (`solicitud_permiso`),
-  CONSTRAINT `s_p_h` FOREIGN KEY (`solicitud_permiso`) REFERENCES `solicitud_permisos` (`id_solicitud_permisos`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci;
-
-/*Data for the table `horas_permiso` */
-
-insert  into `horas_permiso`(`id_horas_permiso`,`fecha`,`hora_salida`,`hora_entrada`,`solicitud_permiso`) values (6,'2018-08-31','09:00:00','10:00:00',32);
 
 /*Table structure for table `marcas_discos` */
 
@@ -218,19 +181,20 @@ CREATE TABLE `modelo_pc` (
 
 insert  into `modelo_pc`(`id_modelo`,`modelo`) values (2,'HP ProDesk 400 G1 MT'),(3,'DH615A_'),(4,'H81M-H');
 
-/*Table structure for table `motivo_permisos` */
+/*Table structure for table `motivos` */
 
-DROP TABLE IF EXISTS `motivo_permisos`;
+DROP TABLE IF EXISTS `motivos`;
 
-CREATE TABLE `motivo_permisos` (
-  `id_motivo_permisos` int(11) NOT NULL AUTO_INCREMENT,
-  `motivo` varchar(25) COLLATE utf8_spanish2_ci NOT NULL,
-  PRIMARY KEY (`id_motivo_permisos`)
+CREATE TABLE `motivos` (
+  `id_mot` int(11) NOT NULL AUTO_INCREMENT,
+  `descripcion_mot` varchar(50) COLLATE utf8_spanish2_ci NOT NULL,
+  `estado_mot` tinyint(4) NOT NULL,
+  PRIMARY KEY (`id_mot`)
 ) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci;
 
-/*Data for the table `motivo_permisos` */
+/*Data for the table `motivos` */
 
-insert  into `motivo_permisos`(`id_motivo_permisos`,`motivo`) values (1,'asuntos personales'),(2,'enfermedad'),(3,'calamidad domestica'),(4,'capacitacion');
+insert  into `motivos`(`id_mot`,`descripcion_mot`,`estado_mot`) values (1,'Asuntos Personales',1),(2,'Enfermedad',1),(3,'Calamidad Domestica',1),(4,'Capacitación',1);
 
 /*Table structure for table `pc` */
 
@@ -267,6 +231,28 @@ CREATE TABLE `permisos` (
 /*Data for the table `permisos` */
 
 insert  into `permisos`(`id_permiso`,`permiso`,`key`) values (1,'Tareas de administracion','admin_access'),(2,'add news','new_news'),(3,'edit news','edit_news'),(4,'delete news','delete_news'),(5,'Dpto. de Talento Humano','admin_dptoTalHum'),(6,'Dpto. de Centro de Computo','admin_dptoCenCom');
+
+/*Table structure for table `permisos_personas` */
+
+DROP TABLE IF EXISTS `permisos_personas`;
+
+CREATE TABLE `permisos_personas` (
+  `id_perm` int(11) NOT NULL AUTO_INCREMENT,
+  `salida_perm` datetime NOT NULL,
+  `llegada_perm` datetime DEFAULT NULL,
+  `inputable_perm` tinyint(4) NOT NULL,
+  `estado_perm` tinyint(4) NOT NULL,
+  `id_personal` int(11) NOT NULL,
+  `id_motivo` int(11) NOT NULL,
+  PRIMARY KEY (`id_perm`),
+  KEY `s_p_m` (`inputable_perm`),
+  KEY `PERM_PERS` (`id_personal`),
+  KEY `PERM_MOTI` (`id_motivo`),
+  CONSTRAINT `PERM_MOTI` FOREIGN KEY (`id_motivo`) REFERENCES `motivos` (`id_mot`),
+  CONSTRAINT `PERM_PERS` FOREIGN KEY (`id_personal`) REFERENCES `personal` (`id_personal`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci;
+
+/*Data for the table `permisos_personas` */
 
 /*Table structure for table `permisos_role` */
 
@@ -306,14 +292,14 @@ DROP TABLE IF EXISTS `personal`;
 
 CREATE TABLE `personal` (
   `id_personal` int(11) NOT NULL AUTO_INCREMENT,
-  `nombres_personal` varchar(50) COLLATE utf8_spanish_ci NOT NULL,
-  `apellidos_personal` varchar(50) COLLATE utf8_spanish_ci NOT NULL,
-  `cedula_personal` varchar(11) COLLATE utf8_spanish_ci NOT NULL,
-  `direccion_personal` varchar(150) COLLATE utf8_spanish_ci NOT NULL,
-  `email_personal` varchar(50) COLLATE utf8_spanish_ci NOT NULL,
-  `correo_institucional_personal` varchar(50) COLLATE utf8_spanish_ci NOT NULL,
-  `telefono_personal` varchar(11) COLLATE utf8_spanish_ci NOT NULL,
-  `fecha_nacimiento_personal` date NOT NULL,
+  `nombres_personal` varchar(50) COLLATE utf8_spanish_ci DEFAULT NULL,
+  `apellidos_personal` varchar(50) COLLATE utf8_spanish_ci DEFAULT NULL,
+  `cedula_personal` varchar(11) COLLATE utf8_spanish_ci DEFAULT NULL,
+  `direccion_personal` varchar(150) COLLATE utf8_spanish_ci DEFAULT NULL,
+  `email_personal` varchar(50) COLLATE utf8_spanish_ci DEFAULT NULL,
+  `correo_institucional_personal` varchar(50) COLLATE utf8_spanish_ci DEFAULT NULL,
+  `telefono_personal` varchar(11) COLLATE utf8_spanish_ci DEFAULT NULL,
+  `fecha_nacimiento_personal` date DEFAULT NULL,
   `tipo_sangre_personal` int(11) NOT NULL,
   `genero_personal` int(11) NOT NULL,
   `estado_civil_personal` int(11) NOT NULL,
@@ -325,11 +311,11 @@ CREATE TABLE `personal` (
   CONSTRAINT `PERS_GEN` FOREIGN KEY (`genero_personal`) REFERENCES `generos` (`id_genero`),
   CONSTRAINT `PERS_SCIV` FOREIGN KEY (`estado_civil_personal`) REFERENCES `estados_civiles` (`id_s_civil`),
   CONSTRAINT `PERS_TSAN` FOREIGN KEY (`tipo_sangre_personal`) REFERENCES `tipos_sangre` (`id_t_sangre`)
-) ENGINE=InnoDB AUTO_INCREMENT=100 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
 /*Data for the table `personal` */
 
-insert  into `personal`(`id_personal`,`nombres_personal`,`apellidos_personal`,`cedula_personal`,`direccion_personal`,`email_personal`,`correo_institucional_personal`,`telefono_personal`,`fecha_nacimiento_personal`,`tipo_sangre_personal`,`genero_personal`,`estado_civil_personal`,`estado_personal`) values (1,'ING. ANGELA VERONICA','ALVARADO','0703762674','LAS PALMERAS Y 25 DE JUNIO','clarynericsa@gmail.com','clarynericsa@gmail.com','0997559305','1992-05-15',1,2,1,1),(2,'ING. ANGELA VERONICA','ALVARADO','0703762674','LAS PALMERAS Y 25 DE JUNIO','clarynericsa@gmail.com','clarynericsa@gmail.com','0997559305','1992-05-15',1,2,1,1),(3,'ING. ANGELA VERONICA','ALVARADO','0703762674','LAS PALMERAS Y 25 DE JUNIO','clarynericsa@gmail.com','clarynericsa@gmail.com','0997559305','1992-05-15',1,2,1,0),(4,'ING. ANGELA VERONICA','ALVARADO','0703762674','LAS PALMERAS Y 25 DE JUNIO','clarynericsa@gmail.com','clarynericsa@gmail.com','0997559305','1992-05-15',1,2,1,1),(5,'ING. ANGELA VERONICA','ALVARADO','0703762674','LAS PALMERAS Y 25 DE JUNIO','clarynericsa@gmail.com','clarynericsa@gmail.com','0997559305','1992-05-15',1,2,1,1),(6,'ING. ANGELA VERONICA','ALVARADO','0703762674','LAS PALMERAS Y 25 DE JUNIO','clarynericsa@gmail.com','clarynericsa@gmail.com','0997559305','1992-05-15',1,2,1,1),(7,'ING. ANGELA VERONICA','ALVARADO','0703762674','LAS PALMERAS Y 25 DE JUNIO','clarynericsa@gmail.com','clarynericsa@gmail.com','0997559305','1992-05-15',1,2,1,0),(8,'ING. ANGELA VERONICA','ALVARADO','0703762674','LAS PALMERAS Y 25 DE JUNIO','clarynericsa@gmail.com','clarynericsa@gmail.com','0997559305','1992-05-15',1,2,1,1),(9,'ING. ANGELA VERONICA','ALVARADO','0703762674','LAS PALMERAS Y 25 DE JUNIO','clarynericsa@gmail.com','clarynericsa@gmail.com','0997559305','1992-05-15',1,2,1,1),(10,'ING. ANGELA VERONICA','ALVARADO','0703762674','LAS PALMERAS Y 25 DE JUNIO','clarynericsa@gmail.com','clarynericsa@gmail.com','0997559305','1992-05-15',1,2,1,0),(11,'ING. ANGELA VERONICA','ALVARADO','0703762674','LAS PALMERAS Y 25 DE JUNIO','clarynericsa@gmail.com','clarynericsa@gmail.com','0997559305','1992-05-15',1,2,1,1),(12,'ING. ANGELA VERONICA','ALVARADO','0703762674','LAS PALMERAS Y 25 DE JUNIO','clarynericsa@gmail.com','clarynericsa@gmail.com','0997559305','1992-05-15',1,2,1,1),(13,'ING. ANGELA VERONICA','ALVARADO','0703762674','LAS PALMERAS Y 25 DE JUNIO','clarynericsa@gmail.com','clarynericsa@gmail.com','0997559305','1992-05-15',1,2,1,0),(14,'ING. ANGELA VERONICA','ALVARADO','0703762674','LAS PALMERAS Y 25 DE JUNIO','clarynericsa@gmail.com','clarynericsa@gmail.com','0997559305','1992-05-15',1,2,1,1),(15,'ING. ANGELA VERONICA','ALVARADO','0703762674','LAS PALMERAS Y 25 DE JUNIO','clarynericsa@gmail.com','clarynericsa@gmail.com','0997559305','1992-05-15',1,2,1,1),(16,'ING. ANGELA VERONICA','ALVARADO','0703762674','LAS PALMERAS Y 25 DE JUNIO','clarynericsa@gmail.com','clarynericsa@gmail.com','0997559305','1992-05-15',1,2,1,1),(17,'ING. ANGELA VERONICA','ALVARADO','0703762674','LAS PALMERAS Y 25 DE JUNIO','clarynericsa@gmail.com','clarynericsa@gmail.com','0997559305','1992-05-15',1,2,1,1),(18,'ING. ANGELA VERONICA','ALVARADO','0703762674','LAS PALMERAS Y 25 DE JUNIO','clarynericsa@gmail.com','clarynericsa@gmail.com','0997559305','1992-05-15',1,2,1,1),(19,'ING. ANGELA VERONICA','ALVARADO','0703762674','LAS PALMERAS Y 25 DE JUNIO','clarynericsa@gmail.com','clarynericsa@gmail.com','0997559305','1992-05-15',1,2,1,1),(20,'ING. ANGELA VERONICA','ALVARADO','0703762674','LAS PALMERAS Y 25 DE JUNIO','clarynericsa@gmail.com','clarynericsa@gmail.com','0997559305','1992-05-15',1,2,1,1),(21,'ING. ANGELA VERONICA','ALVARADO','0703762674','LAS PALMERAS Y 25 DE JUNIO','clarynericsa@gmail.com','clarynericsa@gmail.com','0997559305','1992-05-15',1,2,1,1),(22,'ING. ANGELA VERONICA','ALVARADO','0703762674','LAS PALMERAS Y 25 DE JUNIO','clarynericsa@gmail.com','clarynericsa@gmail.com','0997559305','1992-05-15',1,2,1,1),(23,'ING. ANGELA VERONICA','ALVARADO','0703762674','LAS PALMERAS Y 25 DE JUNIO','clarynericsa@gmail.com','clarynericsa@gmail.com','0997559305','1992-05-15',1,2,1,1),(24,'ING. ANGELA VERONICA','ALVARADO','0703762674','LAS PALMERAS Y 25 DE JUNIO','clarynericsa@gmail.com','clarynericsa@gmail.com','0997559305','1992-05-15',1,2,1,1),(25,'ING. ANGELA VERONICA','ALVARADO','0703762674','LAS PALMERAS Y 25 DE JUNIO','clarynericsa@gmail.com','clarynericsa@gmail.com','0997559305','1992-05-15',1,2,1,1),(26,'ING. ANGELA VERONICA','ALVARADO','0703762674','LAS PALMERAS Y 25 DE JUNIO','clarynericsa@gmail.com','clarynericsa@gmail.com','0997559305','1992-05-15',1,2,1,1),(27,'ING. ANGELA VERONICA','ALVARADO','0703762674','LAS PALMERAS Y 25 DE JUNIO','clarynericsa@gmail.com','clarynericsa@gmail.com','0997559305','1992-05-15',1,2,1,1),(28,'ING. ANGELA VERONICA','ALVARADO','0703762674','LAS PALMERAS Y 25 DE JUNIO','clarynericsa@gmail.com','clarynericsa@gmail.com','0997559305','1992-05-15',1,2,1,1),(29,'ING. ANGELA VERONICA','ALVARADO','0703762674','LAS PALMERAS Y 25 DE JUNIO','clarynericsa@gmail.com','clarynericsa@gmail.com','0997559305','1992-05-15',1,2,1,1),(30,'ING. ANGELA VERONICA','ALVARADO','0703762674','LAS PALMERAS Y 25 DE JUNIO','clarynericsa@gmail.com','clarynericsa@gmail.com','0997559305','1992-05-15',1,2,1,1),(31,'ING. ANGELA VERONICA','ALVARADO','0703762674','LAS PALMERAS Y 25 DE JUNIO','clarynericsa@gmail.com','clarynericsa@gmail.com','0997559305','1992-05-15',1,2,1,1),(32,'ING. ANGELA VERONICA','ALVARADO','0703762674','LAS PALMERAS Y 25 DE JUNIO','clarynericsa@gmail.com','clarynericsa@gmail.com','0997559305','1992-05-15',1,2,1,1),(33,'ING. ANGELA VERONICA','ALVARADO','0703762674','LAS PALMERAS Y 25 DE JUNIO','clarynericsa@gmail.com','clarynericsa@gmail.com','0997559305','1992-05-15',1,2,1,1),(34,'ING. ANGELA VERONICA','ALVARADO','0703762674','LAS PALMERAS Y 25 DE JUNIO','clarynericsa@gmail.com','clarynericsa@gmail.com','0997559305','1992-05-15',1,2,1,1),(35,'ING. ANGELA VERONICA','ALVARADO','0703762674','LAS PALMERAS Y 25 DE JUNIO','clarynericsa@gmail.com','clarynericsa@gmail.com','0997559305','1992-05-15',1,2,1,1),(36,'ING. ANGELA VERONICA','ALVARADO','0703762674','LAS PALMERAS Y 25 DE JUNIO','clarynericsa@gmail.com','clarynericsa@gmail.com','0997559305','1992-05-15',1,2,1,1),(37,'ING. ANGELA VERONICA','ALVARADO','0703762674','LAS PALMERAS Y 25 DE JUNIO','clarynericsa@gmail.com','clarynericsa@gmail.com','0997559305','1992-05-15',1,2,1,1),(38,'ING. ANGELA VERONICA','ALVARADO','0703762674','LAS PALMERAS Y 25 DE JUNIO','clarynericsa@gmail.com','clarynericsa@gmail.com','0997559305','1992-05-15',1,2,1,1),(39,'ING. ANGELA VERONICA','ALVARADO','0703762674','LAS PALMERAS Y 25 DE JUNIO','clarynericsa@gmail.com','clarynericsa@gmail.com','0997559305','1992-05-15',1,2,1,1),(40,'ING. ANGELA VERONICA','ALVARADO','0703762674','LAS PALMERAS Y 25 DE JUNIO','clarynericsa@gmail.com','clarynericsa@gmail.com','0997559305','1992-05-15',1,2,1,1),(41,'ING. ANGELA VERONICA','ALVARADO','0703762674','LAS PALMERAS Y 25 DE JUNIO','clarynericsa@gmail.com','clarynericsa@gmail.com','0997559305','1992-05-15',1,2,1,1),(42,'ING. ANGELA VERONICA','ALVARADO','0703762674','LAS PALMERAS Y 25 DE JUNIO','clarynericsa@gmail.com','clarynericsa@gmail.com','0997559305','1992-05-15',1,2,1,1),(43,'ING. ANGELA VERONICA','ALVARADO','0703762674','LAS PALMERAS Y 25 DE JUNIO','clarynericsa@gmail.com','clarynericsa@gmail.com','0997559305','1992-05-15',1,2,1,1),(44,'ING. ANGELA VERONICA','ALVARADO','0703762674','LAS PALMERAS Y 25 DE JUNIO','clarynericsa@gmail.com','clarynericsa@gmail.com','0997559305','1992-05-15',1,2,1,1),(45,'ING. ANGELA VERONICA','ALVARADO','0703762674','LAS PALMERAS Y 25 DE JUNIO','clarynericsa@gmail.com','clarynericsa@gmail.com','0997559305','1992-05-15',1,2,1,1),(46,'ING. ANGELA VERONICA','ALVARADO','0703762674','LAS PALMERAS Y 25 DE JUNIO','clarynericsa@gmail.com','clarynericsa@gmail.com','0997559305','1992-05-15',1,2,1,1),(47,'ING. ANGELA VERONICA','ALVARADO','0703762674','LAS PALMERAS Y 25 DE JUNIO','clarynericsa@gmail.com','clarynericsa@gmail.com','0997559305','1992-05-15',1,2,1,1),(48,'ING. ANGELA VERONICA','ALVARADO','0703762674','LAS PALMERAS Y 25 DE JUNIO','clarynericsa@gmail.com','clarynericsa@gmail.com','0997559305','1992-05-15',1,2,1,1),(49,'ING. ANGELA VERONICA','ALVARADO','0703762674','LAS PALMERAS Y 25 DE JUNIO','clarynericsa@gmail.com','clarynericsa@gmail.com','0997559305','1992-05-15',1,2,1,1),(50,'ING. ANGELA VERONICA','ALVARADO','0703762674','LAS PALMERAS Y 25 DE JUNIO','clarynericsa@gmail.com','clarynericsa@gmail.com','0997559305','1992-05-15',1,2,1,1),(51,'ING. ANGELA VERONICA','ALVARADO','0703762674','LAS PALMERAS Y 25 DE JUNIO','clarynericsa@gmail.com','clarynericsa@gmail.com','0997559305','1992-05-15',1,2,1,1),(52,'ING. ANGELA VERONICA','ALVARADO','0703762674','LAS PALMERAS Y 25 DE JUNIO','clarynericsa@gmail.com','clarynericsa@gmail.com','0997559305','1992-05-15',1,2,1,1),(53,'ING. ANGELA VERONICA','ALVARADO','0703762674','LAS PALMERAS Y 25 DE JUNIO','clarynericsa@gmail.com','clarynericsa@gmail.com','0997559305','1992-05-15',1,2,1,1),(54,'ING. ANGELA VERONICA','ALVARADO','0703762674','LAS PALMERAS Y 25 DE JUNIO','clarynericsa@gmail.com','clarynericsa@gmail.com','0997559305','1992-05-15',1,2,1,1),(55,'ING. ANGELA VERONICA','ALVARADO','0703762674','LAS PALMERAS Y 25 DE JUNIO','clarynericsa@gmail.com','clarynericsa@gmail.com','0997559305','1992-05-15',1,2,1,1),(56,'ING. ANGELA VERONICA','ALVARADO','0703762674','LAS PALMERAS Y 25 DE JUNIO','clarynericsa@gmail.com','clarynericsa@gmail.com','0997559305','1992-05-15',1,2,1,1),(57,'ING. ANGELA VERONICA','ALVARADO','0703762674','LAS PALMERAS Y 25 DE JUNIO','clarynericsa@gmail.com','clarynericsa@gmail.com','0997559305','1992-05-15',1,2,1,1),(58,'ING. ANGELA VERONICA','ALVARADO','0703762674','LAS PALMERAS Y 25 DE JUNIO','clarynericsa@gmail.com','clarynericsa@gmail.com','0997559305','1992-05-15',1,2,1,1),(59,'ING. ANGELA VERONICA','ALVARADO','0703762674','LAS PALMERAS Y 25 DE JUNIO','clarynericsa@gmail.com','clarynericsa@gmail.com','0997559305','1992-05-15',1,2,1,1),(60,'ING. ANGELA VERONICA','ALVARADO','0703762674','LAS PALMERAS Y 25 DE JUNIO','clarynericsa@gmail.com','clarynericsa@gmail.com','0997559305','1992-05-15',1,2,1,1),(61,'ING. ANGELA VERONICA','ALVARADO','0703762674','LAS PALMERAS Y 25 DE JUNIO','clarynericsa@gmail.com','clarynericsa@gmail.com','0997559305','1992-05-15',1,2,1,1),(62,'ING. ANGELA VERONICA','ALVARADO','0703762674','LAS PALMERAS Y 25 DE JUNIO','clarynericsa@gmail.com','clarynericsa@gmail.com','0997559305','1992-05-15',1,2,1,1),(63,'ING. ANGELA VERONICA','ALVARADO','0703762674','LAS PALMERAS Y 25 DE JUNIO','clarynericsa@gmail.com','clarynericsa@gmail.com','0997559305','1992-05-15',1,2,1,1),(64,'ING. ANGELA VERONICA','ALVARADO','0703762674','LAS PALMERAS Y 25 DE JUNIO','clarynericsa@gmail.com','clarynericsa@gmail.com','0997559305','1992-05-15',1,2,1,1),(65,'ING. ANGELA VERONICA','ALVARADO','0703762674','LAS PALMERAS Y 25 DE JUNIO','clarynericsa@gmail.com','clarynericsa@gmail.com','0997559305','1992-05-15',1,2,1,1),(66,'ING. ANGELA VERONICA','ALVARADO','0703762674','LAS PALMERAS Y 25 DE JUNIO','clarynericsa@gmail.com','clarynericsa@gmail.com','0997559305','1992-05-15',1,2,1,1),(67,'ING. ANGELA VERONICA','ALVARADO','0703762674','LAS PALMERAS Y 25 DE JUNIO','clarynericsa@gmail.com','clarynericsa@gmail.com','0997559305','1992-05-15',1,2,1,1),(68,'ING. ANGELA VERONICA','ALVARADO','0703762674','LAS PALMERAS Y 25 DE JUNIO','clarynericsa@gmail.com','clarynericsa@gmail.com','0997559305','1992-05-15',1,2,1,1),(69,'ING. ANGELA VERONICA','ALVARADO','0703762674','LAS PALMERAS Y 25 DE JUNIO','clarynericsa@gmail.com','clarynericsa@gmail.com','0997559305','1992-05-15',1,2,1,1),(70,'ING. ANGELA VERONICA','ALVARADO','0703762674','LAS PALMERAS Y 25 DE JUNIO','clarynericsa@gmail.com','clarynericsa@gmail.com','0997559305','1992-05-15',1,2,1,1),(71,'ING. ANGELA VERONICA','ALVARADO','0703762674','LAS PALMERAS Y 25 DE JUNIO','clarynericsa@gmail.com','clarynericsa@gmail.com','0997559305','1992-05-15',1,2,1,1),(72,'ING. ANGELA VERONICA','ALVARADO','0703762674','LAS PALMERAS Y 25 DE JUNIO','clarynericsa@gmail.com','clarynericsa@gmail.com','0997559305','1992-05-15',1,2,1,1),(73,'ING. ANGELA VERONICA','ALVARADO','0703762674','LAS PALMERAS Y 25 DE JUNIO','clarynericsa@gmail.com','clarynericsa@gmail.com','0997559305','1992-05-15',1,2,1,1),(74,'ING. ANGELA VERONICA','ALVARADO','0703762674','LAS PALMERAS Y 25 DE JUNIO','clarynericsa@gmail.com','clarynericsa@gmail.com','0997559305','1992-05-15',1,2,1,1),(75,'ING. ANGELA VERONICA','ALVARADO','0703762674','LAS PALMERAS Y 25 DE JUNIO','clarynericsa@gmail.com','clarynericsa@gmail.com','0997559305','1992-05-15',1,2,1,1),(76,'ING. ANGELA VERONICA','ALVARADO','0703762674','LAS PALMERAS Y 25 DE JUNIO','clarynericsa@gmail.com','clarynericsa@gmail.com','0997559305','1992-05-15',1,2,1,1),(77,'ING. ANGELA VERONICA','ALVARADO','0703762674','LAS PALMERAS Y 25 DE JUNIO','clarynericsa@gmail.com','clarynericsa@gmail.com','0997559305','1992-05-15',1,2,1,1),(78,'ING. ANGELA VERONICA','ALVARADO','0703762674','LAS PALMERAS Y 25 DE JUNIO','clarynericsa@gmail.com','clarynericsa@gmail.com','0997559305','1992-05-15',1,2,1,1),(79,'ING. ANGELA VERONICA','ALVARADO','0703762674','LAS PALMERAS Y 25 DE JUNIO','clarynericsa@gmail.com','clarynericsa@gmail.com','0997559305','1992-05-15',1,2,1,1),(80,'ING. ANGELA VERONICA','ALVARADO','0703762674','LAS PALMERAS Y 25 DE JUNIO','clarynericsa@gmail.com','clarynericsa@gmail.com','0997559305','1992-05-15',1,2,1,1),(81,'ING. ANGELA VERONICA','ALVARADO','0703762674','LAS PALMERAS Y 25 DE JUNIO','clarynericsa@gmail.com','clarynericsa@gmail.com','0997559305','1992-05-15',1,2,1,1),(82,'ING. ANGELA VERONICA','ALVARADO','0703762674','LAS PALMERAS Y 25 DE JUNIO','clarynericsa@gmail.com','clarynericsa@gmail.com','0997559305','1992-05-15',1,2,1,1),(83,'ING. ANGELA VERONICA','ALVARADO','0703762674','LAS PALMERAS Y 25 DE JUNIO','clarynericsa@gmail.com','clarynericsa@gmail.com','0997559305','1992-05-15',1,2,1,1),(84,'ING. ANGELA VERONICA','ALVARADO','0703762674','LAS PALMERAS Y 25 DE JUNIO','clarynericsa@gmail.com','clarynericsa@gmail.com','0997559305','1992-05-15',1,2,1,1),(85,'ING. ANGELA VERONICA','ALVARADO','0703762674','LAS PALMERAS Y 25 DE JUNIO','clarynericsa@gmail.com','clarynericsa@gmail.com','0997559305','1992-05-15',1,2,1,1),(86,'ING. ANGELA VERONICA','ALVARADO','0703762674','LAS PALMERAS Y 25 DE JUNIO','clarynericsa@gmail.com','clarynericsa@gmail.com','0997559305','1992-05-15',1,2,1,1),(87,'ING. ANGELA VERONICA','ALVARADO','0703762674','LAS PALMERAS Y 25 DE JUNIO','clarynericsa@gmail.com','clarynericsa@gmail.com','0997559305','1992-05-15',1,2,1,1),(88,'ING. ANGELA VERONICA','ALVARADO','0703762674','LAS PALMERAS Y 25 DE JUNIO','clarynericsa@gmail.com','clarynericsa@gmail.com','0997559305','1992-05-15',1,2,1,1),(89,'ING. ANGELA VERONICA','ALVARADO','0703762674','LAS PALMERAS Y 25 DE JUNIO','clarynericsa@gmail.com','clarynericsa@gmail.com','0997559305','1992-05-15',1,2,1,1),(90,'ING. ANGELA VERONICA','ALVARADO','0703762674','LAS PALMERAS Y 25 DE JUNIO','clarynericsa@gmail.com','clarynericsa@gmail.com','0997559305','1992-05-15',1,2,1,1),(91,'ING. ANGELA VERONICA','ALVARADO','0703762674','LAS PALMERAS Y 25 DE JUNIO','clarynericsa@gmail.com','clarynericsa@gmail.com','0997559305','1992-05-15',1,2,1,1),(92,'ING. ANGELA VERONICA','ALVARADO','0703762674','LAS PALMERAS Y 25 DE JUNIO','clarynericsa@gmail.com','clarynericsa@gmail.com','0997559305','1992-05-15',1,2,1,1),(93,'ING. ANGELA VERONICA','ALVARADO','0703762674','LAS PALMERAS Y 25 DE JUNIO','clarynericsa@gmail.com','clarynericsa@gmail.com','0997559305','1992-05-15',1,2,1,1),(94,'ING. ANGELA VERONICA','ALVARADO','0703762674','LAS PALMERAS Y 25 DE JUNIO','clarynericsa@gmail.com','clarynericsa@gmail.com','0997559305','1992-05-15',1,2,1,1),(95,'ING. ANGELA VERONICA','ALVARADO','0703762674','LAS PALMERAS Y 25 DE JUNIO','clarynericsa@gmail.com','clarynericsa@gmail.com','0997559305','1992-05-15',1,2,1,1),(96,'ING. ANGELA VERONICA','ALVARADO','0703762674','LAS PALMERAS Y 25 DE JUNIO','clarynericsa@gmail.com','clarynericsa@gmail.com','0997559305','1992-05-15',1,2,1,1),(97,'ING. ANGELA VERONICA','ALVARADO','0703762674','LAS PALMERAS Y 25 DE JUNIO','clarynericsa@gmail.com','clarynericsa@gmail.com','0997559305','1992-05-15',1,2,1,1),(98,'ING. ANGELA VERONICA','ALVARADO','0703762674','LAS PALMERAS Y 25 DE JUNIO','clarynericsa@gmail.com','clarynericsa@gmail.com','0997559305','1992-05-15',1,2,1,1),(99,'ING. ANGELA VERONICA','ALVARADO','0703762674','LAS PALMERAS Y 25 DE JUNIO','clarynericsa@gmail.com','clarynericsa@gmail.com','0997559305','1992-05-15',1,2,1,1);
+insert  into `personal`(`id_personal`,`nombres_personal`,`apellidos_personal`,`cedula_personal`,`direccion_personal`,`email_personal`,`correo_institucional_personal`,`telefono_personal`,`fecha_nacimiento_personal`,`tipo_sangre_personal`,`genero_personal`,`estado_civil_personal`,`estado_personal`) values (2,'Victor Hugo','Solorzano','0706674819','Pasaje','victor@email.com','victor@correo.com','33366582','0000-00-00',1,1,1,1),(8,'MARIO ENRIQUE','Moreno ','08562255552','El  Guabo','','','','0000-00-00',1,2,2,1),(10,'MARIO GUSTAVO','Alarcon','08562255552','','','','','0000-00-00',1,2,2,1),(11,'MARIO ENRIQUE','ALARCON','08562255552','','','','','0000-00-00',1,2,2,1);
 
 /*Table structure for table `procesador` */
 
@@ -384,26 +370,6 @@ CREATE TABLE `roles` (
 
 insert  into `roles`(`id_role`,`role`) values (1,'Administrador'),(2,'TalentoHumano'),(3,'CentroDeComputo'),(4,'Usuario');
 
-/*Table structure for table `solicitud_permisos` */
-
-DROP TABLE IF EXISTS `solicitud_permisos`;
-
-CREATE TABLE `solicitud_permisos` (
-  `id_solicitud_permisos` int(11) NOT NULL AUTO_INCREMENT,
-  `persona` int(11) NOT NULL,
-  `motivo` int(11) NOT NULL,
-  `tipo_permiso` int(11) NOT NULL,
-  PRIMARY KEY (`id_solicitud_permisos`),
-  KEY `s_p_m` (`motivo`),
-  KEY `s_p_t` (`tipo_permiso`),
-  CONSTRAINT `s_p_m` FOREIGN KEY (`motivo`) REFERENCES `motivo_permisos` (`id_motivo_permisos`),
-  CONSTRAINT `s_p_t` FOREIGN KEY (`tipo_permiso`) REFERENCES `tipo_permisos` (`id_tipo_permisos`)
-) ENGINE=InnoDB AUTO_INCREMENT=34 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci;
-
-/*Data for the table `solicitud_permisos` */
-
-insert  into `solicitud_permisos`(`id_solicitud_permisos`,`persona`,`motivo`,`tipo_permiso`) values (29,1,2,1),(31,1,3,1),(32,1,1,2),(33,5,1,1);
-
 /*Table structure for table `tecnologia` */
 
 DROP TABLE IF EXISTS `tecnologia`;
@@ -415,20 +381,6 @@ CREATE TABLE `tecnologia` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci;
 
 /*Data for the table `tecnologia` */
-
-/*Table structure for table `tipo_permisos` */
-
-DROP TABLE IF EXISTS `tipo_permisos`;
-
-CREATE TABLE `tipo_permisos` (
-  `id_tipo_permisos` int(11) NOT NULL AUTO_INCREMENT,
-  `tipo_permiso` varchar(50) COLLATE utf8_spanish2_ci NOT NULL,
-  PRIMARY KEY (`id_tipo_permisos`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci;
-
-/*Data for the table `tipo_permisos` */
-
-insert  into `tipo_permisos`(`id_tipo_permisos`,`tipo_permiso`) values (1,'inputable'),(2,'no inputable');
 
 /*Table structure for table `tipos_sangre` */
 
@@ -443,7 +395,7 @@ CREATE TABLE `tipos_sangre` (
 
 /*Data for the table `tipos_sangre` */
 
-insert  into `tipos_sangre`(`id_t_sangre`,`descripcion_t_sangre`,`estado_t_sangre`) values (1,'A+',1);
+insert  into `tipos_sangre`(`id_t_sangre`,`descripcion_t_sangre`,`estado_t_sangre`) values (1,'A+',0);
 
 /*Table structure for table `usuarios` */
 
@@ -689,6 +641,73 @@ BEGIN
     END */$$
 DELIMITER ;
 
+/* Procedure structure for procedure `motivos_proc` */
+
+/*!50003 DROP PROCEDURE IF EXISTS  `motivos_proc` */;
+
+DELIMITER $$
+
+/*!50003 CREATE DEFINER=`root`@`localhost` PROCEDURE `motivos_proc`(
+accion varchar(50),
+id int,
+des varchar(50),
+est tinyint
+    )
+BEGIN
+case accion 
+WHEN 'consultas' THEN
+SELECT id_mot AS id,descripcion_mot AS description,estado_mot AS `status` FROM motivos;
+when 'insertar' then
+insert into motivos (descripcion_mot,estado_mot)  values (des,1);
+end case;
+    END */$$
+DELIMITER ;
+
+/* Procedure structure for procedure `permisos_personas_proc` */
+
+/*!50003 DROP PROCEDURE IF EXISTS  `permisos_personas_proc` */;
+
+DELIMITER $$
+
+/*!50003 CREATE DEFINER=`root`@`localhost` PROCEDURE `permisos_personas_proc`(
+	accion varchar(50),
+	id int,
+	salida datetime,
+	llegada datetime,
+	intputable tinyint,
+	estado tinyint,
+	id_per int,
+	id_mot int
+    )
+BEGIN
+	case accion
+	when 'consultas' then
+	select 
+	p.id_perm as id, p.salida_perm as `exit`,
+	p.llegada_perm AS arrival, p.inputable_perm as inputable, 
+	p.estado_perm as `status`, p.id_personal as id_per,
+	p.id_motivo as id_mot, pr.nombres_personal as `name`, pr.`apellidos_personal` as lastname, m.`descripcion_mot` as description
+	from permisos_personas p, personal pr, motivos m;
+	
+	when 'insertar' then
+	insert into permisos_personas (
+	salida_perm, llegada_perm,
+	inputable_perm, estado_perm,
+	id_personal, id_motivo) 
+	values (
+	salida, llegada,
+	intputable, estado,
+	id_per, id_mot);
+	
+	when 'modificar' then
+	update permisos_personas set 
+	salida_perm = salida, llegada_perm = llegada,
+	inputable_perm = inputable, estado_perm = estado,
+	id_motivo = id_mot where id_perm = id;
+	end case;
+    END */$$
+DELIMITER ;
+
 /* Procedure structure for procedure `personal_proc` */
 
 /*!50003 DROP PROCEDURE IF EXISTS  `personal_proc` */;
@@ -716,54 +735,64 @@ BEGIN
 	DECLARE n TINYINT;
 	SELECT estado_personal INTO n FROM personal WHERE id_personal = id;
 	
-	if accion = "consulta" then
-	SELECT 
-	id_personal AS id,nombres_personal AS `name`,
-	apellidos_personal AS lastname, cedula_personal AS card,
-	direccion_personal AS address, email_personal AS email,
-	correo_institucional_personal AS email2, telefono_personal AS phone,
-	fecha_nacimiento_personal AS birthdate, estado_personal AS state
-	FROM personal;
+	CASE accion
+	when "consulta" then
+		SELECT 
+		id_personal AS id,nombres_personal AS `name`,
+		apellidos_personal AS lastname, cedula_personal AS card,
+		direccion_personal AS address, email_personal AS email,
+		correo_institucional_personal AS email2, telefono_personal AS phone,
+		fecha_nacimiento_personal AS birthdate, tipo_sangre_personal as blood, 
+		genero_personal as gender, estado_civil_personal as civil,
+		estado_personal AS state
+		FROM personal;
+		
+	WHEN "consultaid" THEN
+		SELECT 
+		id_personal AS id,nombres_personal AS `name`,
+		apellidos_personal AS lastname, cedula_personal AS card,
+		direccion_personal AS address, email_personal AS email,
+		correo_institucional_personal AS email2, telefono_personal AS phone,
+		fecha_nacimiento_personal AS birthdate, tipo_sangre_personal AS blood, 
+		genero_personal AS gender, estado_civil_personal AS civil,
+		estado_personal AS state
+		FROM personal where id_personal = id;
+		
+	when "modificar" then
+		update personal set
+		nombres_personal = nom, apellidos_personal = apel,
+		cedula_personal = ced, direccion_personal = dir,
+		email_personal = ema, correo_institucional_personal = cor,
+		telefono_personal = tel, fecha_nacimiento_personal = fec,
+		tipo_sangre_personal = t_s, genero_personal = gen,
+		estado_civil_personal = s_c, estado_personal = 1 
+		where id_personal = id;
 	
-	end if;
+	when "insertar" then
+		INSERT INTO personal 
+		(
+		nombres_personal,apellidos_personal,
+		cedula_personal,direccion_personal,
+		email_personal,correo_institucional_personal,
+		telefono_personal,fecha_nacimiento_personal,
+		tipo_sangre_personal,genero_personal,
+		estado_civil_personal,estado_personal
+		) values (
+		nom,apel,
+		ced,dir,
+		ema,cor,
+		tel,fec,
+		t_s,gen,
+		s_c,1
+		);	
+	when "eliminar" then	
+		if n = 0 then
+		update personal set estado_personal = 1 where id_personal = id;
+		else
+		UPDATE personal SET estado_personal = 0 WHERE id_personal = id;
+		end if;
+	end case;
 	
-	if accion = "modificar" then
-	update personal set
-	nombres_personal = nom, apellidos_personal = apel,
-	cedula_personal = ced, direccion_personal = dir,
-	email_personal = ema, correo_institucional_personal = cor,
-	telefono_personal = tel, fecha_nacimiento_personal = fec,
-	tipo_sangre_personal = t_s, genero_personal = gen,
-	estado_civil_personal = s_c, estado_personal = 1 
-	where id_personal = id;
-	end if;
-	
-	if accion = "insertar" then
-	INSERT INTO personal 
-	(
-	nombres_personal,apellidos_personal,
-	cedula_personal,direccion_personal,
-	email_personal,correo_institucional_personal,
-	telefono_personal,fecha_nacimiento_personal,
-	tipo_sangre_personal,genero_personal,
-	estado_civil_personal,estado_personal
-	) values (
-	nom,apel,
-	ced,dir,
-	ema,cor,
-	tel,fec,
-	t_s,gen,
-	s_c,1
-	);
-	end if;
-	
-	if accion = "eliminar" then	
-	if n = 0 then
-	update personal set estado_personal = 1 where id_personal = id;
-	else
-	UPDATE personal SET estado_personal = 0 WHERE id_personal = id;
-	end if;
-	end if;
     END */$$
 DELIMITER ;
 

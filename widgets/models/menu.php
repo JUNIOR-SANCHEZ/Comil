@@ -1,8 +1,8 @@
 <?php
 class menuModelWidget extends Model
 {
-    private $_registry;
-    private $_acl;
+    private $__registry;
+    private $__acl;
     public function __construct()
     {
         parent::__construct();
@@ -34,6 +34,20 @@ class menuModelWidget extends Model
                     "title" => "Personas",
                     "icon" => " fa-circle-o",
                     "link" => BASE_URL . "personas/",
+                )
+            )
+        );
+
+        $menus["sidenav"][] = array(
+            "id" => "permisos",
+            "title" => "Permisos",
+            "icon" => "fa-hotel",
+            "sub-menu" => array(
+                array(
+                    "id" => "permiso",
+                    "title" => "Nuevo",
+                    "icon" => " fa-circle-o",
+                    "link" => BASE_URL . "permisos/"
                 ),
             ),
         );
