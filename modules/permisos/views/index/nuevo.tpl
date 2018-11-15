@@ -63,7 +63,8 @@
                 </tr>
               </thead>
               <tbody>
-                {foreach item=x from=$consulta}
+                {if isset($consulta) && !empty($consulta)} {foreach item=x
+                from=$consulta}
                 <tr>
                   <td>{$x["id"]}</td>
                   <td>{$x["name"]} {$x["lastname"]}</td>
@@ -90,7 +91,13 @@
                     </a>
                   </td>
                 </tr>
-                {/foreach}
+                {/foreach} {else}
+                <tr>
+                  <td colspan="6">
+                    <h2 class="text-center">No se hay registro</h2>
+                  </td>
+                </tr>
+                {/if}
               </tbody>
             </table>
           </div>
@@ -122,7 +129,7 @@
           <form
             class="form-horizontal"
             id="form-ins"
-            action="{$_layoutParams.root}personas/index/insertar_ajax"
+            action="{$_layoutParams.root}permisos/index/insertar_ajax"
           >
             <div class="box-body">
               <div class="form-group">
@@ -131,9 +138,9 @@
                 </label>
                 <div class="col-sm-8">
                   <select
-                    name="cb_civil"
+                    name="cb_personas"
                     class="form-control form-custom"
-                    id="civil-ins"
+                    id="cb-persona-ins"
                   >
                     <option value="0">Seleccione uno:</option>
                     {foreach item=x from=$personas}
@@ -145,152 +152,141 @@
                 </div>
               </div>
               <div class="form-group">
-                <label for="inputEmail3" class="col-sm-4 control-label">
-                  Fecha de salida:
-                </label>
-                <div class="col-sm-8">
-                  <input
-                    type="text"
-                    name="txtname"
-                    class="form-control"
-                    id="name-ins"
-                    placeholder="{utf8_encode('Nombre')}"
-                  />
-                </div>
-              </div>
-              <div class="form-group">
-                <label for="inputEmail3" class="col-sm-4 control-label"
-                  >{utf8_encode('Apellido')}:</label
-                >
-                <div class="col-sm-8">
-                  <input
-                    type="text"
-                    name="txtlastname"
-                    class="form-control"
-                    id="lastname-ins"
-                    placeholder="{utf8_encode('Apellido')}"
-                  />
-                </div>
-              </div>
-              <div class="form-group">
-                <label for="inputEmail3" class="col-sm-4 control-label"
-                  >{utf8_encode('Fecha de Nacimiento')}:</label
-                >
-                <div class="col-sm-8">
-                  <input
-                    type="email"
-                    name="txtbirthdate"
-                    class="form-control"
-                    id="birthdate-ins"
-                    placeholder="{utf8_encode('Fecha de Nacimiento')}"
-                  />
-                </div>
-              </div>
-              <div class="form-group">
-                <label for="inputEmail3" class="col-sm-4 control-label"
-                  >{utf8_encode('Cedula')}:</label
-                >
-                <div class="col-sm-8">
-                  <input
-                    type="text"
-                    name="txtcard"
-                    class="form-control"
-                    id="card-ins"
-                    placeholder="{utf8_encode('Cedula')}"
-                  />
-                </div>
-              </div>
-
-              <div class="form-group">
-                <label for="inputEmail3" class="col-sm-4 control-label">
-                  Tipo de Sangre:
-                </label>
+                <label class="col-sm-4 control-label"> Motivo: </label>
                 <div class="col-sm-8">
                   <select
-                    name="cb_blod"
+                    name="cb_motivo"
                     class="form-control form-custom"
-                    id="blood-ins"
+                    id="cb-motivo-ins"
                   >
                     <option value="0">Seleccione uno:</option>
-                    {foreach item=x from=$blood}
-                    <option value="{$x['id']}">{$x['description']}</option>
+                    {foreach item=x from=$motivos}
+                    <option value="{$x['id']}"> {$x['description']} </option>
                     {/foreach}
                   </select>
                 </div>
               </div>
               <div class="form-group">
-                <label for="inputEmail3" class="col-sm-4 control-label"
-                  >{utf8_encode('Dirección:')}</label
-                >
+                <label for="inputEmail3" class="col-sm-4 control-label">
+                  Fecha:
+                </label>
                 <div class="col-sm-8">
                   <input
                     type="text"
-                    name="txtaddress"
+                    name="txtfecha"
                     class="form-control"
-                    id="address-ins"
-                    placeholder="{utf8_encode('Dirección')}"
-                  />
-                </div>
-              </div>
-              <div class="form-group">
-                <label for="inputEmail3" class="col-sm-4 control-label"
-                  >Email:</label
-                >
-                <div class="col-sm-8">
-                  <input
-                    type="email"
-                    name="txtemail1"
-                    class="form-control"
-                    id="email1-ins"
-                    placeholder="Email"
-                  />
-                </div>
-              </div>
-              <div class="form-group">
-                <label for="inputEmail3" class="col-sm-4 control-label"
-                  >Correo Institucional:</label
-                >
-                <div class="col-sm-8">
-                  <input
-                    type="email"
-                    name="txtemail2"
-                    class="form-control"
-                    id="email2-ins"
-                    placeholder="Correo Institucional"
+                    id="inp-fecha-ins"
+                    placeholder="Fecha"
+                    data-toggle="datepicker"
                   />
                 </div>
               </div>
 
               <div class="form-group">
-                <label for="inputEmail3" class="col-sm-4 control-label"
-                  >{utf8_encode('Género:')}</label
-                >
-                <div class="col-sm-8">
-                  <select
-                    name="cb_gender"
-                    class="form-control form-custom"
-                    id="gender-ins"
-                  >
-                    <option value="0">Seleccione uno:</option>
-                    {foreach item=x from=$gender}
-                    <option value="{$x['id']}">{$x['description']}</option>
-                    {/foreach}
-                  </select>
+                <label class="col-sm-4 col-sm-offset-4">
+                  Dias:
+                  <input
+                    type="radio"
+                    name="rd_tipo"
+                    class="minimal pull-right"
+                    style="margin-right:20px "
+                    value="D"
+                    checked
+                  />
+                </label>
+                <label class="col-sm-4">
+                  horas:
+                  <input
+                    type="radio"
+                    name="rd_tipo"
+                    class="minimal pull-right"
+                    style="margin-right:20px "
+                    value="H"
+                  />
+                </label>
+              </div>
+
+              <div id="hora">
+                <div class="form-group">
+                  <label for="inputEmail3" class="col-sm-4 control-label">
+                    Salida:
+                  </label>
+                  <div class="col-sm-8">
+                    <input
+                      type="text"
+                      class="form-control timepicker"
+                      placeholder="Salida"
+                      id="inp-salida-h-ins"
+                    />
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label for="inputEmail3" class="col-sm-4 control-label">
+                    Llegada:
+                  </label>
+                  <div class="col-sm-8">
+                    <input
+                      type="text"
+                      class="form-control timepicker"
+                      placeholder="Llegada"
+                      id="inp-llegada-h-ins"
+                    />
+                  </div>
+                </div>
+              </div>
+              <div id="dia">
+                <div class="form-group">
+                  <label for="inputEmail3" class="col-sm-4 control-label">
+                    Salida:
+                  </label>
+                  <div class="col-sm-8">
+                    <input
+                      type="text"
+                      class="form-control"
+                      placeholder="Salida"
+                      id="inp-salida-d-ins"
+                      data-toggle="datepicker"
+                    />
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label for="inputEmail3" class="col-sm-4 control-label">
+                    Llegada:
+                  </label>
+                  <div class="col-sm-8">
+                    <input
+                      type="text"
+                      class="form-control"
+                      placeholder="Llegada"
+                      id="inp-llegada-d-ins"
+                      data-toggle="datepicker"
+                    />
+                  </div>
                 </div>
               </div>
               <div class="form-group">
-                <label for="inputEmail3" class="col-sm-4 control-label"
-                  >{utf8_encode('Teléfono')}:</label
-                >
-                <div class="col-sm-8">
+                <label for="" class="col-sm-4 control-label">Inputable:</label>
+                <label class="col-sm-4">
+                  Si:
                   <input
-                    type="email"
-                    name="txtphone"
-                    class="form-control"
-                    id="phone-ins"
-                    placeholder="{utf8_encode('Teléfono')}"
+                    type="radio"
+                    name="rd_inputable"
+                    class="minimal pull-right"
+                    style="margin-right:20px "
+                    value="1"
+                    checked
                   />
-                </div>
+                </label>
+                <label class="col-sm-4">
+                  No:
+                  <input
+                    type="radio"
+                    name="rd_inputable"
+                    class="minimal pull-right"
+                    style="margin-right:20px "
+                    value="0"
+                  />
+                </label>
               </div>
             </div>
           </form>
@@ -300,206 +296,6 @@
             <i class="fa fa-times-circle-o" aria-hidden="true"></i> Cerrar
           </button>
           <button type="button" class="btn btn-primary" id="btn-ins">
-            <i class="fa fa-save"></i> Guardar
-          </button>
-        </div>
-      </div>
-    </div>
-  </div>
-  <div class="modal fade" id="modal-mod">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <button
-            type="button"
-            class="close"
-            data-dismiss="modal"
-            aria-label="Close"
-          >
-            <span aria-hidden="true">&times;</span>
-          </button>
-          <h4 class="modal-title">Modificar Estado Civil</h4>
-        </div>
-        <div class="modal-body">
-          <form
-            class="form-horizontal"
-            id="form-mod"
-            action="{$_layoutParams.root}personas/index/modificar_ajax"
-          >
-            <input type="hidden" name="id" value="0" id="id" />
-            <div class="box-body">
-              <div class="form-group">
-                <label for="inputEmail3" class="col-sm-4 control-label"
-                  >{utf8_encode('Nombre')}:</label
-                >
-                <div class="col-sm-8">
-                  <input
-                    type="text"
-                    name="txtname"
-                    class="form-control"
-                    id="name-mod"
-                    placeholder="{utf8_encode('Nombre')}"
-                  />
-                </div>
-              </div>
-              <div class="form-group">
-                <label for="inputEmail3" class="col-sm-4 control-label"
-                  >{utf8_encode('Apellido')}:</label
-                >
-                <div class="col-sm-8">
-                  <input
-                    type="text"
-                    name="txtlastname"
-                    class="form-control"
-                    id="lastname-mod"
-                    placeholder="{utf8_encode('Apellido')}"
-                  />
-                </div>
-              </div>
-              <div class="form-group">
-                <label for="inputEmail3" class="col-sm-4 control-label"
-                  >{utf8_encode('Fecha de Nacimiento')}:</label
-                >
-                <div class="col-sm-8">
-                  <input
-                    type="email"
-                    name="txtbirthdate"
-                    class="form-control"
-                    id="birthdate-mod"
-                    placeholder="{utf8_encode('Fecha de Nacimiento')}"
-                  />
-                </div>
-              </div>
-              <div class="form-group">
-                <label for="inputEmail3" class="col-sm-4 control-label"
-                  >{utf8_encode('Cedula')}:</label
-                >
-                <div class="col-sm-8">
-                  <input
-                    type="text"
-                    name="txtcard"
-                    class="form-control"
-                    id="card-mod"
-                    placeholder="{utf8_encode('Cedula')}"
-                  />
-                </div>
-              </div>
-              <div class="form-group">
-                <label for="inputEmail3" class="col-sm-4 control-label"
-                  >Estado Civil:</label
-                >
-                <div class="col-sm-8">
-                  <select
-                    name="cb_civil"
-                    class="form-control form-custom"
-                    id="civil-mod"
-                  >
-                    <option value="0">Seleccione uno:</option>
-                    {foreach item=x from=$civil}
-                    <option value="{$x['id']}">{$x['description']}</option>
-                    {/foreach}
-                  </select>
-                </div>
-              </div>
-              <div class="form-group">
-                <label for="inputEmail3" class="col-sm-4 control-label"
-                  >Tipo de Sangre:</label
-                >
-                <div class="col-sm-8">
-                  <select
-                    name="cb_blod"
-                    class="form-control form-custom"
-                    id="blood-mod"
-                  >
-                    <option value="0">Seleccione uno:</option>
-                    {foreach item=x from=$blood}
-                    <option value="{$x['id']}">{$x['description']}</option>
-                    {/foreach}
-                  </select>
-                </div>
-              </div>
-              <div class="form-group">
-                <label for="inputEmail3" class="col-sm-4 control-label"
-                  >{utf8_encode('Dirección:')}</label
-                >
-                <div class="col-sm-8">
-                  <input
-                    type="text"
-                    name="txtaddress"
-                    class="form-control"
-                    id="address-mod"
-                    placeholder="{utf8_encode('Dirección')}"
-                  />
-                </div>
-              </div>
-              <div class="form-group">
-                <label for="inputEmail3" class="col-sm-4 control-label"
-                  >Email:</label
-                >
-                <div class="col-sm-8">
-                  <input
-                    type="email"
-                    name="txtemail1"
-                    class="form-control"
-                    id="email1-mod"
-                    placeholder="Email"
-                  />
-                </div>
-              </div>
-              <div class="form-group">
-                <label for="inputEmail3" class="col-sm-4 control-label"
-                  >Correo Institucional:</label
-                >
-                <div class="col-sm-8">
-                  <input
-                    type="email"
-                    name="txtemail2"
-                    class="form-control"
-                    id="email2-mod"
-                    placeholder="Correo Institucional"
-                  />
-                </div>
-              </div>
-
-              <div class="form-group">
-                <label for="inputEmail3" class="col-sm-4 control-label"
-                  >{utf8_encode('Género:')}</label
-                >
-                <div class="col-sm-8">
-                  <select
-                    name="cb_gender"
-                    class="form-control form-custom"
-                    id="gender-mod"
-                  >
-                    <option value="0">Seleccione uno:</option>
-                    {foreach item=x from=$gender}
-                    <option value="{$x['id']}">{$x['description']}</option>
-                    {/foreach}
-                  </select>
-                </div>
-              </div>
-              <div class="form-group">
-                <label for="inputEmail3" class="col-sm-4 control-label"
-                  >{utf8_encode('Teléfono')}:</label
-                >
-                <div class="col-sm-8">
-                  <input
-                    type="email"
-                    name="txtphone"
-                    class="form-control"
-                    id="phone-mod"
-                    placeholder="{utf8_encode('Teléfono')}"
-                  />
-                </div>
-              </div>
-            </div>
-          </form>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-danger" data-dismiss="modal">
-            <i class="fa fa-times-circle-o" aria-hidden="true"></i> Cerrar
-          </button>
-          <button type="button" class="btn btn-primary" id="btn-mod">
             <i class="fa fa-save"></i> Guardar
           </button>
         </div>

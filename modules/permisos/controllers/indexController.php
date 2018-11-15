@@ -7,6 +7,8 @@ class indexController extends permisosController
     {
         parent::__construct();
         $this->_sql = $this->loadModel('index');
+        $this->_view->setJsPlugin(array('datepicker','bootstrap-timepicker.min'));
+        $this->_view->setCssPlugin(array('datepicker','bootstrap-timepicker.min'));
     }
     public function index()
     {
@@ -43,6 +45,7 @@ class indexController extends permisosController
     }
     public function insertar_ajax()
     {
+        echo json_encode($_POST);exit;
         if (!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest') {
             $result = $this->_sql->insertar(array());
 
