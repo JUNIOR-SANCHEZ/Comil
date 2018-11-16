@@ -35,27 +35,25 @@
                                 <th style="width: 10px">#</th>
                                 <th>Tipo</th>
                                 <th style="width: 5px"></th>
-                                <th style="width: 5px"></th>
                             </tr>
+                            {if isset($consulta) && !empty($consulta)}
                             {foreach item=x from=$consulta}
                             <tr>
                                 <td>{$x["id"]}</td>
                                 <td class="td-descripcion">{$x["description"]}</td>
                                 <td>
-                                    <a class="btn-id btn btn-warning  btn-sm" data-id="{$x['id']}" data-toggle="modal"
-                                        data-target=".modal-mod">
+                                    <a class="btn-id btn btn-warning  btn-sm" data-id="{$x['id']}" data-toggle="modal" data-target="#modal-mod">
                                         <i class="fa fa-edit"></i>
 
-                                    </a>
-
-                                </td>
-                                <td>
-                                    <a data-id="{$x['id']}" class="btn btn-danger btn-sm btn-del">
-                                        <i class="fa fa-trash-o" aria-hidden="true"></i>
                                     </a>
                                 </td>
                             </tr>
                             {/foreach}
+                            {else}
+                            <tr>
+                                <td colspan="3">No se encontraron registros</td>
+                            </tr>
+                            {/if}
                         </table>
                     </div>
                 </div>
@@ -70,29 +68,30 @@
                         <span aria-hidden="true">&times;</span></button>
                     <h4 class="modal-title">Nuevo Tipo de Sangre</h4>
                 </div>
-                <div class="modal-body">
-                    <form class="form-horizontal" id="form-ins" action="{$_layoutParams.root}personas/tipo_sangre/insertar_ajax">
+                <!-- 
+                    FORMULARIO DE TIPO DE SANGRE
+                 -->
+                <form class="form-horizontal" id="form-ins" action="{$_layoutParams.root}personas/tipo_sangre/insertar_ajax">
+                    <div class="modal-body">
                         <div class="box-body">
                             <div class="form-group">
-                                <label for="inputEmail3" class="col-sm-4 control-label">Descripción</label>
+                                <label for="inputEmail3" class="col-sm-4 control-label">{utf8_encode('Descripci?n')}</label>
                                 <div class="col-sm-8">
-                                    <input type="text" name="txtdescripcion" class="form-control" id="txtdescripcion"
-                                        placeholder="Descripcion">
+                                    <input type="text" name="txtdescripcion" class="form-control" id="txtdescripcion" placeholder="Descripcion">
                                 </div>
                             </div>
                         </div>
-                    </form>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-danger" data-dismiss="modal"><i class="fa fa-times-circle-o"
-                            aria-hidden="true"></i> Cerrar</button>
-                    <button type="button" class="btn btn-primary" id="btn-ins"> <i class="fa fa-save"></i>
-                        Guardar</button>
-                </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-danger" data-dismiss="modal"><i class="fa fa-times-circle-o" aria-hidden="true"></i> Cerrar</button>
+                        <button type="submit" class="btn btn-primary" id="btn-ins"> <i class="fa fa-save"></i>
+                            Guardar</button>
+                    </div>
+                </form>
             </div>
         </div>
     </div>
-    <div class="modal fade modal-mod">
+    <div class="modal fade" id="modal-mod">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
@@ -100,31 +99,23 @@
                         <span aria-hidden="true">&times;</span></button>
                     <h4 class="modal-title">Modificar Tipo de Sangre</h4>
                 </div>
-                <div class="modal-body">
-                    <form class="form-horizontal" id="form-mod" action="{$_layoutParams.root}personas/tipo_sangre/modificar_ajax">
-                        <div class="box-body">
-                            <div class="form-group">
-                                <label for="inputEmail3" class="col-sm-4 control-label">Id</label>
-                                <div class="col-sm-2 pull-right">
-                                    <input type="number" name="txtid" class="form-control " id="txtid-mod">
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label for="inputEmail3" class="col-sm-4 control-label">Descripción</label>
-                                <div class="col-sm-8 ">
-                                    <input type="text" name="txtdescripcion" class="form-control" id="txtdescripcion-mod"
-                                        placeholder="Descripcion">
-                                </div>
+                <form class="form-horizontal" id="form-mod" action="{$_layoutParams.root}personas/tipo_sangre/modificar_ajax">
+                    <div class="modal-body">
+                        <input type="hidden" name="txtid" class="form-control " id="txtid-mod">
+                        <div class="form-group">
+                            <label for="inputEmail3" class="col-sm-4 control-label">Descripción</label>
+                            <div class="col-sm-8 ">
+                                <input type="text" name="txtdescripcion" class="form-control" id="txtdescripcion-mod" placeholder="Descripcion">
                             </div>
                         </div>
-                    </form>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-danger" data-dismiss="modal"><i class="fa fa-times-circle-o"
-                            aria-hidden="true"></i> Cerrar</button>
-                    <button type="button" class="btn btn-primary" id="btn-mod"> <i class="fa fa-save"></i>
-                        Guardar</button>
-                </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-danger" data-dismiss="modal"><i class="fa fa-times-circle-o" aria-hidden="true"></i> Cerrar</button>
+                        <button type="submit" class="btn btn-primary" id="btn-mod">
+                            <i class="fa fa-save"></i>Guardar
+                        </button>
+                    </div>
+                </form>
             </div>
         </div>
     </div>

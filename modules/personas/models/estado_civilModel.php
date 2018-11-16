@@ -17,11 +17,10 @@ class estado_civilModel extends Model{
         try{
             $sql = "CALL estados_civil_proc('insertar',null,:description,null);";
             $stmt = $this->_db->prepare($sql);
-            $result = $stmt->execute(array(":description"=>$dato));
+            $result = $stmt->execute(array(":description"=>$description));
             return $result;
         }catch(PDOException $e){
-            echo $e->getMessage();
-            return 0;
+            return $e->getMessage();
         }
     }
     public function modificar($dato){

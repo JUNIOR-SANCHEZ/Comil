@@ -16,25 +16,25 @@
                     <th style="width: 5px"></th>
                     <th style="width: 5px"></th>
                 </tr>
+                {if isset($consulta) && !empty($consulta)}
                 {foreach item=x from=$consulta}
                 <tr>
                     <td>{$x["id"]}</td>
                     <td class="td-descripcion">{$x["description"]}</td>
                     <td>
-                        <a data-id="{$x['id']}" class=" btn-del">
-                            {if $x["status"] == 1}<span class="label label-success">activo</span>{else}<span class="label label-danger">Inactivo</span>{/if}
-                        </a>
-                    </td>
-                    <td>
                         <a class="btn-id btn btn-warning  btn-sm" data-id="{$x['id']}" data-toggle="modal" data-target=".modal-mod">
                             <i class="fa fa-edit"></i>
-
                         </a>
-
                     </td>
-
                 </tr>
                 {/foreach}
+                {else}
+                <tr>
+                    <td colspan="3">
+                        <p class="text-center">No se encontraron datos</p>
+                    </td>
+                </tr>
+                {/if}
             </table>
         </div>
     </div>

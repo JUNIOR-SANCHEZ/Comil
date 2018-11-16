@@ -12,72 +12,9 @@ MySQL - 5.5.5-10.1.33-MariaDB : Database - comil3
 /*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
 /*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
-CREATE DATABASE /*!32312 IF NOT EXISTS*/`comil3` /*!40100 DEFAULT CHARACTER SET latin1 */;
+CREATE DATABASE /*!32312 IF NOT EXISTS*/`comil3` /*!40100 DEFAULT CHARACTER SET utf8 COLLATE utf8_spanish2_ci */;
 
 USE `comil3`;
-
-/*Table structure for table `capacidad` */
-
-DROP TABLE IF EXISTS `capacidad`;
-
-CREATE TABLE `capacidad` (
-  `id_capacidad` int(11) NOT NULL,
-  `volumen` int(11) NOT NULL,
-  PRIMARY KEY (`id_capacidad`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci;
-
-/*Data for the table `capacidad` */
-
-/*Table structure for table `cargos_funciones_personal` */
-
-DROP TABLE IF EXISTS `cargos_funciones_personal`;
-
-CREATE TABLE `cargos_funciones_personal` (
-  `id_cargos_funciones_personal` int(11) NOT NULL AUTO_INCREMENT,
-  `cargo_funcion` varchar(100) COLLATE utf8_spanish2_ci NOT NULL,
-  PRIMARY KEY (`id_cargos_funciones_personal`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci;
-
-/*Data for the table `cargos_funciones_personal` */
-
-insert  into `cargos_funciones_personal`(`id_cargos_funciones_personal`,`cargo_funcion`) values (1,'Cargo 1'),(2,'Cargo 2'),(3,'cargo 3');
-
-/*Table structure for table `dependencias` */
-
-DROP TABLE IF EXISTS `dependencias`;
-
-CREATE TABLE `dependencias` (
-  `id_dependencias` int(11) NOT NULL AUTO_INCREMENT,
-  `nombre` varchar(100) COLLATE utf8_spanish2_ci NOT NULL,
-  PRIMARY KEY (`id_dependencias`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci;
-
-/*Data for the table `dependencias` */
-
-insert  into `dependencias`(`id_dependencias`,`nombre`) values (1,'laboratorio de ingles bachillerato');
-
-/*Table structure for table `disco_duro` */
-
-DROP TABLE IF EXISTS `disco_duro`;
-
-CREATE TABLE `disco_duro` (
-  `id_disco_duro` int(11) NOT NULL,
-  `marca` int(11) NOT NULL,
-  `capacidad` int(11) NOT NULL,
-  `tecnologia` int(11) NOT NULL,
-  `pc` int(11) NOT NULL,
-  PRIMARY KEY (`id_disco_duro`),
-  KEY `D_C` (`capacidad`),
-  KEY `D_T` (`tecnologia`),
-  KEY `D_M` (`marca`),
-  KEY `D_P` (`pc`),
-  CONSTRAINT `D_C` FOREIGN KEY (`capacidad`) REFERENCES `capacidad` (`id_capacidad`),
-  CONSTRAINT `D_M` FOREIGN KEY (`marca`) REFERENCES `marcas_discos` (`id_marca`),
-  CONSTRAINT `D_P` FOREIGN KEY (`pc`) REFERENCES `pc` (`id_pc`),
-  CONSTRAINT `D_T` FOREIGN KEY (`tecnologia`) REFERENCES `tecnologia` (`id_tecnologia`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci;
-
-/*Data for the table `disco_duro` */
 
 /*Table structure for table `estados_civiles` */
 
@@ -88,11 +25,15 @@ CREATE TABLE `estados_civiles` (
   `descripcion_s_civil` varchar(20) COLLATE utf8_spanish2_ci NOT NULL,
   `estado_s_civil` tinyint(4) NOT NULL,
   PRIMARY KEY (`id_s_civil`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci;
 
 /*Data for the table `estados_civiles` */
 
-insert  into `estados_civiles`(`id_s_civil`,`descripcion_s_civil`,`estado_s_civil`) values (1,'Soltero(a)',1),(2,'Casado(a)',1),(3,'Divorciado(a)',0),(4,'Viudo(a)',0);
+LOCK TABLES `estados_civiles` WRITE;
+
+insert  into `estados_civiles`(`id_s_civil`,`descripcion_s_civil`,`estado_s_civil`) values (1,'Solteros(as)',1);
+
+UNLOCK TABLES;
 
 /*Table structure for table `generos` */
 
@@ -103,83 +44,13 @@ CREATE TABLE `generos` (
   `descripcion_genero` varchar(10) COLLATE utf8_spanish2_ci NOT NULL,
   `estado_genero` tinyint(4) DEFAULT NULL,
   PRIMARY KEY (`id_genero`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci;
 
 /*Data for the table `generos` */
 
-insert  into `generos`(`id_genero`,`descripcion_genero`,`estado_genero`) values (1,'masculino',1),(2,'femenino',1);
+LOCK TABLES `generos` WRITE;
 
-/*Table structure for table `hoja_vida_equipos` */
-
-DROP TABLE IF EXISTS `hoja_vida_equipos`;
-
-CREATE TABLE `hoja_vida_equipos` (
-  `id_hoja_vida_equipos` int(11) NOT NULL AUTO_INCREMENT,
-  `fecha_emision` datetime NOT NULL,
-  `codigo` varchar(50) COLLATE utf8_spanish2_ci NOT NULL,
-  `responsables` int(11) NOT NULL,
-  PRIMARY KEY (`id_hoja_vida_equipos`),
-  KEY `HVE_R` (`responsables`),
-  CONSTRAINT `HVE_R` FOREIGN KEY (`responsables`) REFERENCES `responsables_ccp` (`id_responsables_ccp`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci;
-
-/*Data for the table `hoja_vida_equipos` */
-
-/*Table structure for table `marcas_discos` */
-
-DROP TABLE IF EXISTS `marcas_discos`;
-
-CREATE TABLE `marcas_discos` (
-  `id_marca` int(11) NOT NULL AUTO_INCREMENT,
-  `marca` varchar(50) NOT NULL,
-  PRIMARY KEY (`id_marca`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
-
-/*Data for the table `marcas_discos` */
-
-insert  into `marcas_discos`(`id_marca`,`marca`) values (1,'SEAGATE'),(2,'ITACHI');
-
-/*Table structure for table `marcas_pc` */
-
-DROP TABLE IF EXISTS `marcas_pc`;
-
-CREATE TABLE `marcas_pc` (
-  `id_marcas` int(11) NOT NULL AUTO_INCREMENT,
-  `marca` varchar(50) COLLATE utf8_spanish2_ci NOT NULL,
-  PRIMARY KEY (`id_marcas`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci;
-
-/*Data for the table `marcas_pc` */
-
-insert  into `marcas_pc`(`id_marcas`,`marca`) values (1,'HP'),(2,'TOSHIBA'),(3,'SAMSUNG'),(4,'ACER'),(5,'OTROS');
-
-/*Table structure for table `marcas_procesador` */
-
-DROP TABLE IF EXISTS `marcas_procesador`;
-
-CREATE TABLE `marcas_procesador` (
-  `id_marca` int(11) NOT NULL AUTO_INCREMENT,
-  `marca` varchar(50) COLLATE utf8_spanish2_ci NOT NULL,
-  PRIMARY KEY (`id_marca`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci;
-
-/*Data for the table `marcas_procesador` */
-
-insert  into `marcas_procesador`(`id_marca`,`marca`) values (1,'AMD'),(2,'INTEL');
-
-/*Table structure for table `modelo_pc` */
-
-DROP TABLE IF EXISTS `modelo_pc`;
-
-CREATE TABLE `modelo_pc` (
-  `id_modelo` int(11) NOT NULL AUTO_INCREMENT,
-  `modelo` varchar(50) COLLATE utf8_spanish2_ci NOT NULL,
-  PRIMARY KEY (`id_modelo`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci;
-
-/*Data for the table `modelo_pc` */
-
-insert  into `modelo_pc`(`id_modelo`,`modelo`) values (2,'HP ProDesk 400 G1 MT'),(3,'DH615A_'),(4,'H81M-H');
+UNLOCK TABLES;
 
 /*Table structure for table `motivos` */
 
@@ -190,32 +61,13 @@ CREATE TABLE `motivos` (
   `descripcion_mot` varchar(50) COLLATE utf8_spanish2_ci NOT NULL,
   `estado_mot` tinyint(4) NOT NULL,
   PRIMARY KEY (`id_mot`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci;
 
 /*Data for the table `motivos` */
 
-insert  into `motivos`(`id_mot`,`descripcion_mot`,`estado_mot`) values (1,'Asuntos Personales',1),(2,'Enfermedad',1),(3,'Calamidad Domestica',1),(4,'Capacitación',1);
+LOCK TABLES `motivos` WRITE;
 
-/*Table structure for table `pc` */
-
-DROP TABLE IF EXISTS `pc`;
-
-CREATE TABLE `pc` (
-  `id_pc` int(11) NOT NULL AUTO_INCREMENT,
-  `nombre` varchar(50) NOT NULL,
-  `serie` varchar(50) DEFAULT NULL,
-  `marcas` int(11) NOT NULL,
-  `modelo` int(11) NOT NULL,
-  PRIMARY KEY (`id_pc`),
-  KEY `P_MA` (`marcas`),
-  KEY `P_MO` (`modelo`),
-  CONSTRAINT `P_MA` FOREIGN KEY (`marcas`) REFERENCES `marcas_pc` (`id_marcas`),
-  CONSTRAINT `P_MO` FOREIGN KEY (`modelo`) REFERENCES `modelo_pc` (`id_modelo`)
-) ENGINE=InnoDB AUTO_INCREMENT=58 DEFAULT CHARSET=latin1;
-
-/*Data for the table `pc` */
-
-insert  into `pc`(`id_pc`,`nombre`,`serie`,`marcas`,`modelo`) values (40,'EN-LAB-06','521CG11114006',2,3),(41,'EN-LAB-06','521CG11114006',2,3),(42,'EN-LAB-06','521CG11114006',2,2),(43,'EN-LAB-06','521CG11114006',2,2),(44,'EN-LAB-06','521CG11114006',1,2),(45,'EN-LAB-06','521CG11114006',1,2),(46,'EN-LAB-06','521CG11114006',2,3),(47,'EN-LAB-06','521CG11114006',1,2),(48,'EN-LAB-06','521CG11114006',2,2),(49,'EN-LAB-06','521CG11114006',2,2),(50,'EN-LAB-06','521CG11114006',1,2),(51,'EN-LAB-06','521CG11114006',1,2),(52,'EN-LAB-06','521CG11114006',1,2),(53,'EN-LAB-06','521CG11114006',1,2),(54,'EN-LAB-06','521CG11114006',1,2),(55,'EN-LAB-06','521CG11114006',1,2),(56,'EN-LAB-06','521CG11114006',1,2),(57,'EN-LAB-06','521CG11114006',2,2);
+UNLOCK TABLES;
 
 /*Table structure for table `permisos` */
 
@@ -226,11 +78,13 @@ CREATE TABLE `permisos` (
   `permiso` varchar(100) COLLATE utf8_spanish_ci NOT NULL,
   `key` varchar(50) COLLATE utf8_spanish_ci NOT NULL,
   PRIMARY KEY (`id_permiso`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
 /*Data for the table `permisos` */
 
-insert  into `permisos`(`id_permiso`,`permiso`,`key`) values (1,'Tareas de administracion','admin_access'),(2,'add news','new_news'),(3,'edit news','edit_news'),(4,'delete news','delete_news'),(5,'Dpto. de Talento Humano','admin_dptoTalHum'),(6,'Dpto. de Centro de Computo','admin_dptoCenCom');
+LOCK TABLES `permisos` WRITE;
+
+UNLOCK TABLES;
 
 /*Table structure for table `permisos_personas` */
 
@@ -238,12 +92,15 @@ DROP TABLE IF EXISTS `permisos_personas`;
 
 CREATE TABLE `permisos_personas` (
   `id_perm` int(11) NOT NULL AUTO_INCREMENT,
-  `salida_perm` datetime NOT NULL,
-  `llegada_perm` datetime DEFAULT NULL,
+  `id_motivo` int(11) NOT NULL,
+  `id_personal` int(11) NOT NULL,
+  `fecha_perm` date DEFAULT NULL,
+  `salida_perm` varchar(25) COLLATE utf8_spanish2_ci NOT NULL,
+  `llegada_perm` varchar(25) COLLATE utf8_spanish2_ci DEFAULT NULL,
   `inputable_perm` tinyint(4) NOT NULL,
   `estado_perm` tinyint(4) NOT NULL,
-  `id_personal` int(11) NOT NULL,
-  `id_motivo` int(11) NOT NULL,
+  `tipo_perm` char(1) COLLATE utf8_spanish2_ci DEFAULT NULL,
+  `detalle_perm` varchar(150) COLLATE utf8_spanish2_ci DEFAULT NULL,
   PRIMARY KEY (`id_perm`),
   KEY `s_p_m` (`inputable_perm`),
   KEY `PERM_PERS` (`id_personal`),
@@ -253,6 +110,10 @@ CREATE TABLE `permisos_personas` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci;
 
 /*Data for the table `permisos_personas` */
+
+LOCK TABLES `permisos_personas` WRITE;
+
+UNLOCK TABLES;
 
 /*Table structure for table `permisos_role` */
 
@@ -269,7 +130,9 @@ CREATE TABLE `permisos_role` (
 
 /*Data for the table `permisos_role` */
 
-insert  into `permisos_role`(`role`,`permiso`,`valor`) values (1,1,1),(1,2,1),(1,3,1),(1,4,1),(2,2,1),(2,3,1),(2,4,1),(2,5,1),(3,6,1);
+LOCK TABLES `permisos_role` WRITE;
+
+UNLOCK TABLES;
 
 /*Table structure for table `permisos_usuario` */
 
@@ -285,6 +148,10 @@ CREATE TABLE `permisos_usuario` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci;
 
 /*Data for the table `permisos_usuario` */
+
+LOCK TABLES `permisos_usuario` WRITE;
+
+UNLOCK TABLES;
 
 /*Table structure for table `personal` */
 
@@ -311,50 +178,13 @@ CREATE TABLE `personal` (
   CONSTRAINT `PERS_GEN` FOREIGN KEY (`genero_personal`) REFERENCES `generos` (`id_genero`),
   CONSTRAINT `PERS_SCIV` FOREIGN KEY (`estado_civil_personal`) REFERENCES `estados_civiles` (`id_s_civil`),
   CONSTRAINT `PERS_TSAN` FOREIGN KEY (`tipo_sangre_personal`) REFERENCES `tipos_sangre` (`id_t_sangre`)
-) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
 /*Data for the table `personal` */
 
-insert  into `personal`(`id_personal`,`nombres_personal`,`apellidos_personal`,`cedula_personal`,`direccion_personal`,`email_personal`,`correo_institucional_personal`,`telefono_personal`,`fecha_nacimiento_personal`,`tipo_sangre_personal`,`genero_personal`,`estado_civil_personal`,`estado_personal`) values (2,'Victor Hugo','Solorzano','0706674819','Pasaje','victor@email.com','victor@correo.com','33366582','0000-00-00',1,1,1,1),(8,'MARIO ENRIQUE','Moreno ','08562255552','El  Guabo','','','','0000-00-00',1,2,2,1),(10,'MARIO GUSTAVO','Alarcon','08562255552','','','','','0000-00-00',1,2,2,1),(11,'MARIO ENRIQUE','ALARCON','08562255552','','','','','0000-00-00',1,2,2,1);
+LOCK TABLES `personal` WRITE;
 
-/*Table structure for table `procesador` */
-
-DROP TABLE IF EXISTS `procesador`;
-
-CREATE TABLE `procesador` (
-  `id_procesador` int(11) NOT NULL AUTO_INCREMENT,
-  `marca` int(11) NOT NULL,
-  `modelo` varchar(50) COLLATE utf8_spanish2_ci NOT NULL,
-  `velocidad` int(11) NOT NULL,
-  `pc` int(11) NOT NULL,
-  PRIMARY KEY (`id_procesador`),
-  KEY `P_M` (`marca`),
-  KEY `P_MO` (`modelo`),
-  KEY `P_P` (`pc`),
-  KEY `P_V` (`velocidad`),
-  CONSTRAINT `P_M` FOREIGN KEY (`marca`) REFERENCES `marcas_procesador` (`id_marca`),
-  CONSTRAINT `P_P` FOREIGN KEY (`pc`) REFERENCES `pc` (`id_pc`),
-  CONSTRAINT `P_V` FOREIGN KEY (`velocidad`) REFERENCES `velocidad_procesador` (`id_velocidad`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci;
-
-/*Data for the table `procesador` */
-
-/*Table structure for table `responsables_ccp` */
-
-DROP TABLE IF EXISTS `responsables_ccp`;
-
-CREATE TABLE `responsables_ccp` (
-  `id_responsables_ccp` int(11) NOT NULL AUTO_INCREMENT,
-  `nombres` varchar(50) NOT NULL,
-  `apellidos` varchar(50) NOT NULL,
-  `dependencias` varchar(100) NOT NULL,
-  `cargos` varchar(100) NOT NULL,
-  PRIMARY KEY (`id_responsables_ccp`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=latin1;
-
-/*Data for the table `responsables_ccp` */
-
-insert  into `responsables_ccp`(`id_responsables_ccp`,`nombres`,`apellidos`,`dependencias`,`cargos`) values (6,'EDISON','FLORES','LABORATORIO DE COMPUTACION DE LA ESCUELA','RESPONSABLE DEL LABORATORIO DE COMPUTO'),(7,'SOLANGE','QUISHPE','LABORATORIO DE COMPUTACION BACHILLERATO Nª 2','RESPONSABLE DE LABORATORIO DE COMPUTO');
+UNLOCK TABLES;
 
 /*Table structure for table `roles` */
 
@@ -364,23 +194,13 @@ CREATE TABLE `roles` (
   `id_role` int(11) NOT NULL AUTO_INCREMENT,
   `role` varchar(100) COLLATE utf8_spanish2_ci NOT NULL,
   PRIMARY KEY (`id_role`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci;
 
 /*Data for the table `roles` */
 
-insert  into `roles`(`id_role`,`role`) values (1,'Administrador'),(2,'TalentoHumano'),(3,'CentroDeComputo'),(4,'Usuario');
+LOCK TABLES `roles` WRITE;
 
-/*Table structure for table `tecnologia` */
-
-DROP TABLE IF EXISTS `tecnologia`;
-
-CREATE TABLE `tecnologia` (
-  `id_tecnologia` int(11) NOT NULL AUTO_INCREMENT,
-  `tipo` varchar(5) COLLATE utf8_spanish2_ci NOT NULL,
-  PRIMARY KEY (`id_tecnologia`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci;
-
-/*Data for the table `tecnologia` */
+UNLOCK TABLES;
 
 /*Table structure for table `tipos_sangre` */
 
@@ -391,11 +211,15 @@ CREATE TABLE `tipos_sangre` (
   `descripcion_t_sangre` varchar(5) COLLATE utf8_spanish2_ci NOT NULL,
   `estado_t_sangre` tinyint(4) NOT NULL,
   PRIMARY KEY (`id_t_sangre`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci;
 
 /*Data for the table `tipos_sangre` */
 
-insert  into `tipos_sangre`(`id_t_sangre`,`descripcion_t_sangre`,`estado_t_sangre`) values (1,'A+',0);
+LOCK TABLES `tipos_sangre` WRITE;
+
+insert  into `tipos_sangre`(`id_t_sangre`,`descripcion_t_sangre`,`estado_t_sangre`) values (1,'A-',1),(2,'B-',1),(3,'AB+',1),(4,'A+',1);
+
+UNLOCK TABLES;
 
 /*Table structure for table `usuarios` */
 
@@ -416,23 +240,13 @@ CREATE TABLE `usuarios` (
   `codigo` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `role` (`role`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci;
 
 /*Data for the table `usuarios` */
 
-insert  into `usuarios`(`id`,`nombre`,`imagen`,`usuario`,`pass`,`email`,`phone`,`ocupacion`,`role`,`estado`,`fecha`,`codigo`) values (1,NULL,'user.png','SrtoLeon','5bae17944cfa8bd5587a430e4a48c9ec0ce68219','leon@leon.com',NULL,NULL,2,1,'2018-08-09',NULL),(2,NULL,'user.png','SartoSanchez','5bae17944cfa8bd5587a430e4a48c9ec0ce68219','sanchez@sanchez.com',NULL,NULL,3,1,'2018-08-09',NULL);
+LOCK TABLES `usuarios` WRITE;
 
-/*Table structure for table `velocidad_procesador` */
-
-DROP TABLE IF EXISTS `velocidad_procesador`;
-
-CREATE TABLE `velocidad_procesador` (
-  `id_velocidad` int(11) NOT NULL AUTO_INCREMENT,
-  `velocidad` int(11) NOT NULL,
-  PRIMARY KEY (`id_velocidad`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci;
-
-/*Data for the table `velocidad_procesador` */
+UNLOCK TABLES;
 
 /* Function  structure for function  `solicitudDiasImputable_F` */
 
@@ -659,6 +473,8 @@ WHEN 'consultas' THEN
 SELECT id_mot AS id,descripcion_mot AS description,estado_mot AS `status` FROM motivos;
 when 'insertar' then
 insert into motivos (descripcion_mot,estado_mot)  values (des,1);
+when 'modificar' then 
+update motivos set descripcion_mot = des, estado_mot = esta where id_mot = id;
 end case;
     END */$$
 DELIMITER ;
@@ -672,12 +488,15 @@ DELIMITER $$
 /*!50003 CREATE DEFINER=`root`@`localhost` PROCEDURE `permisos_personas_proc`(
 	accion varchar(50),
 	id int,
-	salida datetime,
-	llegada datetime,
+	id_per INT,
+	id_mot INT,
+	fecha date,
+	salida varchar(25),
+	llegada VARCHAR(25),
 	intputable tinyint,
 	estado tinyint,
-	id_per int,
-	id_mot int
+	tipo tinyint,
+	detalle varchar(150)
     )
 BEGIN
 	case accion
@@ -686,23 +505,42 @@ BEGIN
 	p.id_perm as id, p.salida_perm as `exit`,
 	p.llegada_perm AS arrival, p.inputable_perm as inputable, 
 	p.estado_perm as `status`, p.id_personal as id_per,
+	p.tipo_perm as tipo,p.fecha_perm as fecha,
 	p.id_motivo as id_mot, pr.nombres_personal as `name`, pr.`apellidos_personal` as lastname, m.`descripcion_mot` as description
-	from permisos_personas p, personal pr, motivos m;
+	from permisos_personas p, personal pr, motivos m 
+	where p.id_motivo = m.id_mot
+	and p.id_personal = pr.id_personal;
+	
+	WHEN 'consultasdia' THEN
+	SELECT 
+	p.id_perm AS id, p.salida_perm AS `exit`,
+	p.llegada_perm AS arrival, p.inputable_perm AS inputable, 
+	p.estado_perm AS `status`, p.id_personal AS id_per,
+	p.tipo_perm AS tipo,p.fecha_perm AS fecha,
+	p.id_motivo AS id_mot, pr.nombres_personal AS `name`, pr.`apellidos_personal` AS lastname, m.`descripcion_mot` AS description
+	FROM permisos_personas p, personal pr, motivos m 
+	WHERE p.id_motivo = m.id_mot
+	AND p.id_personal = pr.id_personal
+	and p.fecha_perm =  CURDATE();
 	
 	when 'insertar' then
 	insert into permisos_personas (
-	salida_perm, llegada_perm,
-	inputable_perm, estado_perm,
-	id_personal, id_motivo) 
-	values (
-	salida, llegada,
-	intputable, estado,
-	id_per, id_mot);
+	fecha_perm,salida_perm,
+	llegada_perm,inputable_perm,
+	estado_perm,tipo_perm,
+	id_personal, id_motivo, detalle_perm
+	) values (
+	fecha,salida,
+	llegada,intputable,
+	1,tipo,id_per,
+	id_mot,detalle
+	);
 	
 	when 'modificar' then
 	update permisos_personas set 
 	salida_perm = salida, llegada_perm = llegada,
-	inputable_perm = inputable, estado_perm = estado,
+	inputable_perm = inputable,
+	fecha_perm = fecha,tipo_perm = tipo,
 	id_motivo = id_mot where id_perm = id;
 	end case;
     END */$$

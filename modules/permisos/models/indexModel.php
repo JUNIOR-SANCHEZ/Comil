@@ -8,7 +8,7 @@ class indexModel extends Model
     public function consulta()
     {
         try {
-            $sql = "CALL permisos_personas_proc('consultas',NULL,NULL,NULL,NULL,NULL,NULL,NULL)";
+            $sql = "CALL permisos_personas_proc('consultasdia',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);";
             $stmt = $this->_db->query($sql)->fetchAll(PDO::FETCH_ASSOC);
             return $stmt;
         } catch (PDOException $e) {
@@ -53,9 +53,19 @@ class indexModel extends Model
     public function insertar($dato)
     {
         try {
-            $sql = "";
+            $sql = "CALL permisos_personas_proc('insertar',NULL,:id_pers,:id_mot,:fecha,:salida,:llegada,:inputable,NUll,:tipo,:detalle);";
             $stmt = $this->_db->prepare($sql);
-            $result = $stmt->execute(array());
+            $result = $stmt->execute(array(
+                ':id_pers'=> $dato[0],
+                ':id_mot'=> $dato[1],
+                ':fecha'=> $dato[2],
+                ':salida'=> $dato[3],
+                ':llegada'=> $dato[4],
+                ':inputable'=> $dato[5],
+                ':tipo'=> $dato[6],
+                ':detalle'=> $dato[7]
+                
+            ));
             return $result;
         } catch (PDOException $e) {
             echo $e->getMessage();
@@ -65,9 +75,19 @@ class indexModel extends Model
     public function modificar($dato)
     {
         try {
-            $sql = "";
+            $sql = "CALL personal_proc('modificar',:id,:fecha,:salida,:llegada,:inputable,:estado,:tipo,:id_pers,:id_mot);";
             $stmt = $this->_db->prepare($sql);
-            $result = $stmt->execute(array());
+            $result = $stmt->execute(array(
+                ':fecha'=> $dato[0],
+                ':salida'=> $dato[1],
+                ':llegada'=> $dato[2],
+                ':inputable'=> $dato[3],
+                ':estado'=> 1,
+                ':tipo'=> $dato[5],
+                ':id_pers'=> $dato[6],
+                ':id_mot'=> $dato[7],
+                ':id'=>$dato[8]
+            ));
             return $result;
         } catch (PDOException $e) {
             echo $e->getMessage();

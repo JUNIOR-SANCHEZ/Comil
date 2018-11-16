@@ -14,26 +14,25 @@
                     <th style="width: 10px">#</th>
                     <th>Tipo</th>
                     <th style="width: 5px"></th>
-                    <th style="width: 5px"></th>
                 </tr>
+                {if isset($consulta) && !empty($consulta)}
                 {foreach item=x from=$consulta}
                 <tr>
                     <td>{$x["id"]}</td>
                     <td class="td-descripcion">{$x["description"]}</td>
                     <td>
-                        <a class="btn-id btn btn-warning  btn-sm" data-id="{$x['id']}" data-toggle="modal" data-target=".modal-mod">
+                        <a class="btn-id btn btn-warning  btn-sm" data-id="{$x['id']}" data-toggle="modal" data-target="#modal-mod">
                             <i class="fa fa-edit"></i>
 
-                        </a>
-
-                    </td>
-                    <td>
-                        <a href="" class="btn btn-danger btn-sm">
-                            <i class="fa fa-trash-o" aria-hidden="true"></i>
                         </a>
                     </td>
                 </tr>
                 {/foreach}
+                {else}
+                <tr>
+                    <td colspan="3">No se encontraron registros</td>
+                </tr>
+                {/if}
             </table>
         </div>
     </div>

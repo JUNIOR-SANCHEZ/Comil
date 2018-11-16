@@ -28,13 +28,15 @@ class estado_civilController extends personasController{
     }
     public function insertar_ajax()
     {
+        // echo json_encode(array("error"=>$this->getText("txtdescripcion")));exit;
         if (!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest') {
             $result = $this->_sql->insertar($this->getText("txtdescripcion"));
-            if($result > 0){
-                echo "Se registro ".$result." registro";
-            }else{
-                echo "Error al registrar";
+            if (!$result) {
+                echo json_encode(array("error"=>"Error al registrar"));
+                exit;
             }
+            echo json_encode("Se registro registro");
+            exit;
         } else {
             echo "Error Processing Request";
         }

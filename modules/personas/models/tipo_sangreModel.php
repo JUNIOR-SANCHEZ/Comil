@@ -14,32 +14,29 @@ class tipo_sangreModel extends Model{
             return $stmt;
 
         }catch(PDOException $e){
-            echo $e->getMessage();
-            return null;
+            return $e->getMessage();
         }
     }
     public function insertar($description)
     {
         try{
-            $sql = "CALL tipos_sangre_proc('consulta',NULL,:description,NULL);";
+            $sql = "CALL tipos_sangre_proc('insertar',NULL,:description,NULL);"; 
             $stmt = $this->_db->prepare($sql);
             $result = $stmt->execute(array(":description"=>$description));
             return $result;
         }catch(PDOException $e){
-            echo $e->getMessage();
-            return 0;
+            return $e->getMessage();
         }
     }
     public function modificar($dato)
     {
         try{
-            $sql = "CALL tipos_sangre_proc('consulta',:id,:description,NULL);";
+            $sql = "CALL tipos_sangre_proc('modificar',:id,:description,NULL);";
             $stmt = $this->_db->prepare($sql);
             $result = $stmt->execute(array(":id"=>$dato[0],":description"=>$dato[1]));
             return $result;
         }catch(PDOException $e){
-            echo $e->getMessage()."<br>";
-            return 0;
+            return $e->getMessage();
         }
     }
     public function eliminar($id)

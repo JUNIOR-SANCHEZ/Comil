@@ -12,7 +12,7 @@ class indexController extends permisosController
     }
     public function index()
     {
-        $this->_view->setJs(array('js'));
+        $this->_view->setJs(array('eventos','js'));
         $paginador = new Paginador();
         $this->_view->assign('title', 'Nuevo');
         $this->_view->assign('motivos',$this->_sql->motivos());
@@ -45,9 +45,18 @@ class indexController extends permisosController
     }
     public function insertar_ajax()
     {
-        echo json_encode($_POST);exit;
+        // echo json_encode($_POST);exit;
         if (!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest') {
-            $result = $this->_sql->insertar(array());
+            $result = $this->_sql->insertar(array(
+                $this->getInt('cb_personas'),
+                $this->getInt('cb_motivo'),
+                date("Y/m/d", strtotime($this->getText('txtfecha'))),
+                $this->getText('txtsalida'),
+                $this->getText('txtllegada'),
+                $this->getInt('rd_inputable'),
+                $this->getText('rd_tipo'),
+                $this->getText('txtdescripcion')
+            ));
 
             if (!$result) {
                 echo json_encode(array('error' => 'Ha ocurrido un error'));
