@@ -11,12 +11,6 @@
 <section class="content">
   <div class="row">
     <div class="col-sm-12">
-      <a href="{$_layoutParams.root}personas/index/exel" class="btn btn-info">
-        <i class="fa fa-file-excel-o" aria-hidden="true"></i> EXEL
-      </a>
-      <button type="button" class="btn btn-info">
-        <i class="fa fa-file-pdf-o" aria-hidden="true"></i> PDF
-      </button>
       <button type="button" class="btn btn-primary pull-right" data-toggle="modal" data-target="#modal-ins">
         <i class="fa fa-plus" aria-hidden="true"></i> Nuevo Tipo
       </button>
@@ -55,8 +49,8 @@
                 </tr>
               </thead>
               <tbody>
-                {if isset($consulta) && !empty($consulta)} {foreach item=x
-                from=$consulta}
+                {if isset($consulta) && !empty($consulta)} 
+                {foreach item=x from=$consulta}
                 <tr>
                   <td>{$x["id"]}</td>
                   <td>{$x["name"]} {$x["lastname"]}</td>
@@ -79,15 +73,15 @@
                   </td>
                   <td>{$x["description"]}</td>
                   <td>
-                    <a data-ruta="{$_layoutParams.root}personas/index/consultaid_ajax/{$x['id']}" class="btn btn-link btn-per" data-toggle="modal" data-target="#modal-mod">
+                    <a data-ruta="{$_layoutParams.root}permisos/index/consultaid_ajax/{$x['id']}" class="btn btn-link btn-select" data-toggle="modal" data-target="#modal-mod">
                       <i class="fa fa-edit"></i>
                     </a>
                   </td>
                 </tr>
                 {/foreach} {else}
                 <tr>
-                  <td colspan="6">
-                    <h2 class="text-center">No se hay registro</h2>
+                  <td colspan="8">
+                    <p class="text-center">No se hay registro</p>
                   </td>
                 </tr>
                 {/if}
@@ -223,6 +217,133 @@
               <i class="fa fa-times-circle-o" aria-hidden="true"></i> Cerrar
             </button>
             <button type="submit" class="btn btn-primary" id="btn-ins">
+              <i class="fa fa-save"></i> Guardar
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+  <div class="modal fade" id="modal-mod">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+          <h4 class="modal-title"><strong>Registrar Permisos</strong></h4>
+        </div>
+        <!-- 
+                  FORMULARIO DE ENVIO     
+          -->
+        <form class="form-horizontal" id="form-mod" action="{$_layoutParams.root}permisos/index/modificar_ajax">
+          <input type="hidden" name="id" id="inp-id-mod">
+          <div class="modal-body">
+            <div class="box-body">
+              <div class="form-group">
+                <label for="inputEmail3" class="col-sm-4 control-label">Persona:</label>
+                <div class="col-sm-8">
+                  <select name="cb_personas" class="form-control form-custom" id="cb-persona-mod">
+                    <option value="0">Seleccione uno:</option>
+                    {foreach item=x from=$personas}
+                    <option value="{$x['id']}">
+                      {$x['name']} {$x['lastname']}
+                    </option>
+                    {/foreach}
+                  </select>
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="col-sm-4 control-label">Motivo:</label>
+                <div class="col-sm-8">
+                  <select name="cb_motivo" class="form-control form-custom" id="cb-motivo-mod">
+                    <option value="0">Seleccione uno:</option>
+                    {foreach item=x from=$motivos}
+                    <option value="{$x['id']}"> {$x['description']} </option>
+                    {/foreach}
+                  </select>
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="inputEmail3" class="col-sm-4 control-label">Fecha:</label>
+                <div class="col-sm-8">
+                  <input type="text" name="txtfecha" class="form-control" id="inp-fecha-mod" placeholder="Fecha" data-toggle="datepicker" />
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="col-sm-4 col-sm-offset-4">
+                  Dias:
+                  <input type="radio" name="rd_tipo_mod" class="minimal pull-right" style="margin-right:20px " value="D" id="rd-dia" />
+                </label>
+                <label class="col-sm-4">
+                  horas:
+                  <input type="radio" name="rd_tipo_mod" class="minimal pull-right" style="margin-right:20px " value="H" id="rd-hora" />
+                </label>
+              </div>
+              <!-- 
+                IMPUT PARA REGISTRAR LA HORA
+              -->
+              <div id="hora-mod">
+                <div class="form-group">
+                  <label for="inputEmail3" class="col-sm-4 control-label">Salida:</label>
+                  <div class="col-sm-8">
+                    <input type="text" class="form-control" placeholder="Salida" id="inp-salida-h-mod" />
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label for="inp-llegada-h-mod" class="col-sm-4 control-label">Llegada:</label>
+                  <div class="col-sm-8">
+                    <input type="text" class="form-control" placeholder="Llegada" id="inp-llegada-h-mod" />
+                  </div>
+                </div>
+              </div>
+              <!-- 
+                IMPUT PARA REGISTRAR LA HORA
+              -->
+              <!-- 
+                IMPUT PARA REGISTRAR EL DIA
+              -->
+              <div id="dia-mod">
+                <div class="form-group">
+                  <label for="inputEmail3" class="col-sm-4 control-label">Salida:</label>
+                  <div class="col-sm-8">
+                    <input type="text" class="form-control" placeholder="Salida" id="inp-salida-d-mod" data-toggle="datepicker" />
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label for="inputEmail3" class="col-sm-4 control-label">Llegada:</label>
+                  <div class="col-sm-8">
+                    <input type="text" class="form-control" placeholder="Llegada" id="inp-llegada-d-mod" data-toggle="datepicker" />
+                  </div>
+                </div>
+              </div>
+              <!-- 
+                IMPUT PARA REGISTRAR EL DIA
+              -->
+              <div class="form-group">
+                <label for="tar-descripcion-mod" class="col-sm-4 control-label">Descripción:</label>
+                <div class="col-sm-8">
+                  <textarea name="txtdescripcion" id="tar-descripcion-mod" rows="5" class="form-control"></textarea>
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="" class="col-sm-4 control-label">Inputable:</label>
+                <label class="col-sm-4">
+                  Si:
+                  <input type="radio" name="rd_inputable" class="minimal pull-right" style="margin-right:20px " value="1" id="rd-inputable"/>
+                </label>
+                <label class="col-sm-4">
+                  No:
+                  <input type="radio" name="rd_inputable" class="minimal pull-right" style="margin-right:20px " value="0" id="rd-noimputable"/>
+                </label>
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-danger" data-dismiss="modal">
+              <i class="fa fa-times-circle-o" aria-hidden="true"></i> Cerrar
+            </button>
+            <button type="submit" class="btn btn-primary" id="btn-mod">
               <i class="fa fa-save"></i> Guardar
             </button>
           </div>

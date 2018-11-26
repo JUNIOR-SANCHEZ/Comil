@@ -4,6 +4,10 @@
 
 $(document).ready(function () {
   var pagina = 1;
+  $('input[type="radio"].flat-red').iCheck({
+    checkboxClass: 'icheckbox_flat-green',
+    radioClass: 'iradio_flat-green'
+  });
   function paginacion(dato) {
     $.post(_root_ + "personas/index/consultar_ajax", dato, function(response) {
       $("#contenedor").html("");
@@ -33,9 +37,15 @@ $(document).ready(function () {
         $("#email2-mod").val(data.email2);
         $("#phone-mod").val(data.phone);
         $("#id").val(data.id);
-        $(`#civil-mod option[value="${data.civil}"]`).attr("selected", true);;
-        $(`#blood-mod option[value="${data.blood}"]`).attr("selected",true);;
-        $(`#gender-mod option[value="${data.gender}"]`).attr("selected",true);;
+        $(`#civil-mod option[value="${data.civil}"]`).attr("selected", true);
+        $(`#blood-mod option[value="${data.blood}"]`).attr("selected", true);
+        if (data.gender == "H") {
+          $(`#rd-gender1-mod`).attr("checked",true);
+        } else {
+          $(`#rd-gender2-mod`).attr("checked",true);
+        }
+        console.log(data.gender);
+        
       },
       "JSON"
     );

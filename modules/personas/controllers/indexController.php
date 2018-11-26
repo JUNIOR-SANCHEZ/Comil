@@ -9,7 +9,9 @@ class indexController extends personasController
     {
         parent::__construct();
         $this->_sql = $this->loadModel("index");
-        // $this->_view->setCssPlugin(array("dataTables.bootstrap"));
+        $this->_view->setCssPlugin(array("all"));
+        $this->_view->setJsPlugin(array("icheck.min"));
+
     }
     public function index()
     {
@@ -19,7 +21,7 @@ class indexController extends personasController
         $this->_view->assign("title", "Personas");
         $this->_view->assign('consulta', $paginador->paginar($this->_sql->consulta()));
         $this->_view->assign('civil', $this->_sql->civilstatus());
-        $this->_view->assign('gender', $this->_sql->gender());
+        // $this->_view->assign('gender', $this->_sql->gender());
         $this->_view->assign('blood', $this->_sql->blood());
         $this->_view->assign('paginador', $paginador->getView('paginacion_ajax'));
         $this->_view->renderizar("index", "personas", "index");
@@ -53,12 +55,12 @@ class indexController extends personasController
                     $this->getText("txtlastname"),
                     $this->getText("txtcard"),
                     $this->getText("txtaddress"),
-                    $this->getText("txtemail"),
+                    $this->getText("txtemail1"),
                     $this->getText("txtemail2"),
                     $this->getText("txtphone"),
                     $this->getText("txtbirthdate"),
                     $this->getInt("cb_blod"),
-                    $this->getInt("cb_gender"),
+                    $this->getText("rd_genero"),
                     $this->getInt("cb_civil"),
                 )
             );
@@ -86,7 +88,7 @@ class indexController extends personasController
                     $this->getText("txtphone"),
                     $this->getText("txtbirthdate"),
                     $this->getInt("cb_blod"),
-                    $this->getInt("cb_gender"),
+                    $this->getText("rd_genero"),
                     $this->getInt("cb_civil"),
                     $this->getInt("id"),
                 )

@@ -35,23 +35,6 @@ insert  into `estados_civiles`(`id_s_civil`,`descripcion_s_civil`,`estado_s_civi
 
 UNLOCK TABLES;
 
-/*Table structure for table `generos` */
-
-DROP TABLE IF EXISTS `generos`;
-
-CREATE TABLE `generos` (
-  `id_genero` int(11) NOT NULL AUTO_INCREMENT,
-  `descripcion_genero` varchar(10) COLLATE utf8_spanish2_ci NOT NULL,
-  `estado_genero` tinyint(4) DEFAULT NULL,
-  PRIMARY KEY (`id_genero`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci;
-
-/*Data for the table `generos` */
-
-LOCK TABLES `generos` WRITE;
-
-UNLOCK TABLES;
-
 /*Table structure for table `motivos` */
 
 DROP TABLE IF EXISTS `motivos`;
@@ -61,11 +44,13 @@ CREATE TABLE `motivos` (
   `descripcion_mot` varchar(50) COLLATE utf8_spanish2_ci NOT NULL,
   `estado_mot` tinyint(4) NOT NULL,
   PRIMARY KEY (`id_mot`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci;
 
 /*Data for the table `motivos` */
 
 LOCK TABLES `motivos` WRITE;
+
+insert  into `motivos`(`id_mot`,`descripcion_mot`,`estado_mot`) values (1,'Asunto Personales',1),(2,'Enfermedad',1);
 
 UNLOCK TABLES;
 
@@ -107,11 +92,13 @@ CREATE TABLE `permisos_personas` (
   KEY `PERM_MOTI` (`id_motivo`),
   CONSTRAINT `PERM_MOTI` FOREIGN KEY (`id_motivo`) REFERENCES `motivos` (`id_mot`),
   CONSTRAINT `PERM_PERS` FOREIGN KEY (`id_personal`) REFERENCES `personal` (`id_personal`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci;
 
 /*Data for the table `permisos_personas` */
 
 LOCK TABLES `permisos_personas` WRITE;
+
+insert  into `permisos_personas`(`id_perm`,`id_motivo`,`id_personal`,`fecha_perm`,`salida_perm`,`llegada_perm`,`inputable_perm`,`estado_perm`,`tipo_perm`,`detalle_perm`) values (2,1,1,'2018-11-26','2018-11-26','2018-11-28',1,1,'D','Viaje');
 
 UNLOCK TABLES;
 
@@ -168,21 +155,22 @@ CREATE TABLE `personal` (
   `telefono_personal` varchar(11) COLLATE utf8_spanish_ci DEFAULT NULL,
   `fecha_nacimiento_personal` date DEFAULT NULL,
   `tipo_sangre_personal` int(11) NOT NULL,
-  `genero_personal` int(11) NOT NULL,
+  `genero_personal` char(1) COLLATE utf8_spanish_ci NOT NULL,
   `estado_civil_personal` int(11) NOT NULL,
   `estado_personal` tinyint(1) NOT NULL,
   PRIMARY KEY (`id_personal`),
   KEY `PERS_SCIV` (`estado_civil_personal`),
   KEY `PERS_TSAN` (`tipo_sangre_personal`),
   KEY `PERS_GEN` (`genero_personal`),
-  CONSTRAINT `PERS_GEN` FOREIGN KEY (`genero_personal`) REFERENCES `generos` (`id_genero`),
   CONSTRAINT `PERS_SCIV` FOREIGN KEY (`estado_civil_personal`) REFERENCES `estados_civiles` (`id_s_civil`),
   CONSTRAINT `PERS_TSAN` FOREIGN KEY (`tipo_sangre_personal`) REFERENCES `tipos_sangre` (`id_t_sangre`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
 /*Data for the table `personal` */
 
 LOCK TABLES `personal` WRITE;
+
+insert  into `personal`(`id_personal`,`nombres_personal`,`apellidos_personal`,`cedula_personal`,`direccion_personal`,`email_personal`,`correo_institucional_personal`,`telefono_personal`,`fecha_nacimiento_personal`,`tipo_sangre_personal`,`genero_personal`,`estado_civil_personal`,`estado_personal`) values (1,'JUAN PABLO','AGUILAR APOLO','0706584021','CIR SUR Y PALMERA ESQ.','juag@email.com','juag@correo.com','0958421563','1885-05-06',1,'H',1,1);
 
 UNLOCK TABLES;
 
@@ -494,7 +482,7 @@ DELIMITER $$
 	salida varchar(25),
 	llegada VARCHAR(25),
 	intputable tinyint,
-	estado tinyint,
+	estado char(1),
 	tipo tinyint,
 	detalle varchar(150)
     )
@@ -502,26 +490,28 @@ BEGIN
 	case accion
 	when 'consultas' then
 	select 
-	p.id_perm as id, p.salida_perm as `exit`,
-	p.llegada_perm AS arrival, p.inputable_perm as inputable, 
-	p.estado_perm as `status`, p.id_personal as id_per,
-	p.tipo_perm as tipo,p.fecha_perm as fecha,
-	p.id_motivo as id_mot, pr.nombres_personal as `name`, pr.`apellidos_personal` as lastname, m.`descripcion_mot` as description
-	from permisos_personas p, personal pr, motivos m 
-	where p.id_motivo = m.id_mot
-	and p.id_personal = pr.id_personal;
+	p.id_perm as id,		p.salida_perm as `exit`,		p.llegada_perm AS arrival,		p.inputable_perm as inputable, 
+	p.estado_perm as `status`,	p.id_personal as id_per,		p.tipo_perm as tipo,			p.fecha_perm as fecha,
+	p.id_motivo as id_mot,		pr.nombres_personal as `name`, 		pr.`apellidos_personal` as lastname 	
+	FROM permisos_personas p, personal pr
+	WHERE p.id_personal = pr.id_personal;
 	
 	WHEN 'consultasdia' THEN
 	SELECT 
-	p.id_perm AS id, p.salida_perm AS `exit`,
-	p.llegada_perm AS arrival, p.inputable_perm AS inputable, 
-	p.estado_perm AS `status`, p.id_personal AS id_per,
-	p.tipo_perm AS tipo,p.fecha_perm AS fecha,
-	p.id_motivo AS id_mot, pr.nombres_personal AS `name`, pr.`apellidos_personal` AS lastname, m.`descripcion_mot` AS description
-	FROM permisos_personas p, personal pr, motivos m 
-	WHERE p.id_motivo = m.id_mot
-	AND p.id_personal = pr.id_personal
+	p.id_perm AS id,		p.salida_perm AS `exit`,		p.llegada_perm AS arrival,		p.inputable_perm AS inputable, 
+	p.estado_perm AS `status`, 	p.id_personal AS id_per,		p.tipo_perm AS tipo,			p.fecha_perm AS fecha,
+	p.id_motivo AS id_mot,		pr.nombres_personal AS `name`,		pr.`apellidos_personal` AS lastname,	p.`detalle_perm` as description
+	FROM permisos_personas p, personal pr, motivos m
+	WHERE p.id_personal = pr.id_personal
+	and p.id_motivo = m.id_mot
 	and p.fecha_perm =  CURDATE();
+	
+	when 'consultaid' then
+	SELECT 
+	p.id_perm AS id,		p.salida_perm AS `exit`,		p.llegada_perm AS arrival, 		p.inputable_perm AS inputable, 
+	p.estado_perm AS `status`, 	p.id_personal AS id_per,		p.tipo_perm AS tipo,			p.fecha_perm AS fecha,
+	p.id_motivo AS id_mot,		p.`detalle_perm` AS description
+	FROM permisos_personas p 	WHERE 	p.id_perm = id;
 	
 	when 'insertar' then
 	insert into permisos_personas (
@@ -564,7 +554,7 @@ DELIMITER $$
 	tel varchar(50),
 	fec vaRCHAR(50),
 	t_s  int,
-	gen int,
+	gen char(1),
 	s_c int,
 	est tinyint
 	

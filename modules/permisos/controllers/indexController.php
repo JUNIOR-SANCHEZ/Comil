@@ -16,7 +16,7 @@ class indexController extends permisosController
         $paginador = new Paginador();
         $this->_view->assign('title', 'Nuevo');
         $this->_view->assign('motivos',$this->_sql->motivos());
-        $this->_view->assign('personas',$this->_sql->personas());
+        $this->_view->assign('personas',$this->_sql->personas()); 
         $this->_view->assign('consulta', $paginador->paginar($this->_sql->consulta()));
         $this->_view->assign('paginador', $paginador->getView('paginacion_ajax'));
         $this->_view->renderizar('nuevo', 'permisos', 'permiso');
@@ -33,7 +33,7 @@ class indexController extends permisosController
             echo 'Error Processing Request';
         }
     }
-    public function consulta_id($id)
+    public function consultaid_ajax($id)
     {
         if (!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest') {
             $result = $this->_sql->consulta_id($id);
@@ -71,7 +71,17 @@ class indexController extends permisosController
     public function modificar_ajax()
     {
         if (!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest') {
-            $result = $this->_sql->modificar(array());
+            $result = $this->_sql->modificar(array(
+                $this->getInt('cb_personas'),
+                $this->getInt('cb_motivo'),
+                date("Y/m/d", strtotime($this->getText('txtfecha'))),
+                $this->getText('txtsalida'),
+                $this->getText('txtllegada'),
+                $this->getInt('rd_inputable'),
+                $this->getText('rd_tipo'),
+                $this->getText('txtdescripcion'),
+                $this->getInt('id')
+            ));
             if (!$result) {
                 echo json_encode(array('error' => 'Ha ocurrido un error'));
                 exit;
