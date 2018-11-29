@@ -49,7 +49,7 @@
                 </tr>
               </thead>
               <tbody>
-                {if isset($consulta) && !empty($consulta)} 
+                {if isset($consulta) && !empty($consulta)}
                 {foreach item=x from=$consulta}
                 <tr>
                   <td>{$x["id"]}</td>
@@ -110,7 +110,7 @@
         <!-- 
                   FORMULARIO DE ENVIO     
           -->
-        <form class="form-horizontal" id="form-ins" action="{$_layoutParams.root}permisos/index/insertar_ajax">
+        <form class="form-horizontal" id="form-ins" action="{$_layoutParams.root}permisos/index/insertar_ajax" autocomplete="off">
           <div class="modal-body">
             <div class="box-body">
               <div class="form-group">
@@ -146,53 +146,25 @@
               <div class="form-group">
                 <label class="col-sm-4 col-sm-offset-4">
                   Dias:
-                  <input type="radio" name="rd_tipo" class="minimal pull-right" style="margin-right:20px " value="D" checked />
+                  <input type="radio" name="rd_tipo" style="margin-right:20px " value="D" checked />
                 </label>
                 <label class="col-sm-4">
                   horas:
-                  <input type="radio" name="rd_tipo" class="minimal pull-right" style="margin-right:20px " value="H" />
+                  <input type="radio" name="rd_tipo" style="margin-right:20px " value="H" />
                 </label>
               </div>
-              <!-- 
-                IMPUT PARA REGISTRAR LA HORA
-              -->
-              <div id="hora">
-                <div class="form-group">
-                  <label for="inputEmail3" class="col-sm-4 control-label">Salida:</label>
-                  <div class="col-sm-8">
-                    <input type="text" class="form-control timepicker" placeholder="Salida" id="inp-salida-h-ins" />
-                  </div>
-                </div>
-                <div class="form-group">
-                  <label for="inputEmail3" class="col-sm-4 control-label">Llegada:</label>
-                  <div class="col-sm-8">
-                    <input type="text" class="form-control" placeholder="Llegada" id="inp-llegada-h-ins" />
-                  </div>
+              <div class="form-group">
+                <label for="inputEmail3" class="col-sm-4 control-label">Salida:</label>
+                <div class="col-sm-8">
+                  <input type="text" name="txtsalida" class="form-control" placeholder="Salida" id="inp-salida-ins" />
                 </div>
               </div>
-              <!-- 
-                IMPUT PARA REGISTRAR LA HORA
-              -->
-              <!-- 
-                IMPUT PARA REGISTRAR EL DIA
-              -->
-              <div id="dia">
-                <div class="form-group">
-                  <label for="inputEmail3" class="col-sm-4 control-label">Salida:</label>
-                  <div class="col-sm-8">
-                    <input type="text" class="form-control" placeholder="Salida" id="inp-salida-d-ins" data-toggle="datepicker" />
-                  </div>
-                </div>
-                <div class="form-group">
-                  <label for="inputEmail3" class="col-sm-4 control-label">Llegada:</label>
-                  <div class="col-sm-8">
-                    <input type="text" class="form-control" placeholder="Llegada" id="inp-llegada-d-ins" data-toggle="datepicker" />
-                  </div>
+              <div class="form-group">
+                <label for="inputEmail3" class="col-sm-4 control-label">Llegada:</label>
+                <div class="col-sm-8">
+                  <input type="text" name="txtllegada" class="form-control" placeholder="Llegada" id="inp-llegada-ins" />
                 </div>
               </div>
-              <!-- 
-                IMPUT PARA REGISTRAR EL DIA
-              -->
               <div class="form-group">
                 <label for="tar-descripcion-ins" class="col-sm-4 control-label">Descripción:</label>
                 <div class="col-sm-8">
@@ -236,7 +208,7 @@
         <!-- 
                   FORMULARIO DE ENVIO     
           -->
-        <form class="form-horizontal" id="form-mod" action="{$_layoutParams.root}permisos/index/modificar_ajax">
+        <form class="form-horizontal" id="form-mod" action="{$_layoutParams.root}permisos/index/modificar_ajax" autocomplete="off">
           <input type="hidden" name="id" id="inp-id-mod">
           <div class="modal-body">
             <div class="box-body">
@@ -273,53 +245,25 @@
               <div class="form-group">
                 <label class="col-sm-4 col-sm-offset-4">
                   Dias:
-                  <input type="radio" name="rd_tipo_mod" class="minimal pull-right" style="margin-right:20px " value="D" id="rd-dia" />
+                  <input type="radio" name="rd_tipo" class="minimal pull-right" style="margin-right:20px " value="D" id="rd-dia-mod" />
                 </label>
                 <label class="col-sm-4">
                   horas:
-                  <input type="radio" name="rd_tipo_mod" class="minimal pull-right" style="margin-right:20px " value="H" id="rd-hora" />
+                  <input type="radio" name="rd_tipo" class="minimal pull-right" style="margin-right:20px " value="H" id="rd-hora-mod" />
                 </label>
               </div>
-              <!-- 
-                IMPUT PARA REGISTRAR LA HORA
-              -->
-              <div id="hora-mod">
                 <div class="form-group">
                   <label for="inputEmail3" class="col-sm-4 control-label">Salida:</label>
                   <div class="col-sm-8">
-                    <input type="text" class="form-control" placeholder="Salida" id="inp-salida-h-mod" />
+                    <input type="text" name="txtsalida" class="form-control" placeholder="Salida" id="inp-salida-mod" />
                   </div>
                 </div>
                 <div class="form-group">
                   <label for="inp-llegada-h-mod" class="col-sm-4 control-label">Llegada:</label>
                   <div class="col-sm-8">
-                    <input type="text" class="form-control" placeholder="Llegada" id="inp-llegada-h-mod" />
+                    <input type="text" name="txtllegada" class="form-control" placeholder="Llegada" id="inp-llegada-mod" />
                   </div>
                 </div>
-              </div>
-              <!-- 
-                IMPUT PARA REGISTRAR LA HORA
-              -->
-              <!-- 
-                IMPUT PARA REGISTRAR EL DIA
-              -->
-              <div id="dia-mod">
-                <div class="form-group">
-                  <label for="inputEmail3" class="col-sm-4 control-label">Salida:</label>
-                  <div class="col-sm-8">
-                    <input type="text" class="form-control" placeholder="Salida" id="inp-salida-d-mod" data-toggle="datepicker" />
-                  </div>
-                </div>
-                <div class="form-group">
-                  <label for="inputEmail3" class="col-sm-4 control-label">Llegada:</label>
-                  <div class="col-sm-8">
-                    <input type="text" class="form-control" placeholder="Llegada" id="inp-llegada-d-mod" data-toggle="datepicker" />
-                  </div>
-                </div>
-              </div>
-              <!-- 
-                IMPUT PARA REGISTRAR EL DIA
-              -->
               <div class="form-group">
                 <label for="tar-descripcion-mod" class="col-sm-4 control-label">Descripción:</label>
                 <div class="col-sm-8">
@@ -330,11 +274,11 @@
                 <label for="" class="col-sm-4 control-label">Inputable:</label>
                 <label class="col-sm-4">
                   Si:
-                  <input type="radio" name="rd_inputable" class="minimal pull-right" style="margin-right:20px " value="1" id="rd-inputable"/>
+                  <input type="radio" name="rd_inputable" class="minimal pull-right" style="margin-right:20px " value="1" id="rd-inputable" />
                 </label>
                 <label class="col-sm-4">
                   No:
-                  <input type="radio" name="rd_inputable" class="minimal pull-right" style="margin-right:20px " value="0" id="rd-noimputable"/>
+                  <input type="radio" name="rd_inputable" class="minimal pull-right" style="margin-right:20px " value="0" id="rd-noimputable" />
                 </label>
               </div>
             </div>

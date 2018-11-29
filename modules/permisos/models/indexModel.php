@@ -75,7 +75,7 @@ class indexModel extends Model
     public function modificar($dato)
     {
         try {
-            $sql = "CALL personal_proc('modificar',:id,:id_pers,:id_mot,:fecha,:salida,:llegada,:inputable,NUll,:tipo,:detalle);";
+            $sql = "CALL permisos_personas_proc('modificar',:id,:id_pers,:id_mot,:fecha,:salida,:llegada,:inputable,NUll,:tipo,:detalle);";
             $stmt = $this->_db->prepare($sql);
             $result = $stmt->execute(array(
                 ':id_pers'=> $dato[0],

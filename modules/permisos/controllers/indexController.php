@@ -70,6 +70,7 @@ class indexController extends permisosController
     }
     public function modificar_ajax()
     {
+        // echo json_encode($_POST);exit;
         if (!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest') {
             $result = $this->_sql->modificar(array(
                 $this->getInt('cb_personas'),

@@ -49,6 +49,12 @@ class menuModelWidget extends Model
                     "icon" => " fa-circle-o",
                     "link" => BASE_URL . "permisos/"
                 ),
+                array(
+                    "id" => "Lista",
+                    "title" => "Lista",
+                    "icon" => " fa-circle-o",
+                    "link" => BASE_URL . "permisos/"
+                ),
             ),
         );
 

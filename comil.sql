@@ -92,13 +92,13 @@ CREATE TABLE `permisos_personas` (
   KEY `PERM_MOTI` (`id_motivo`),
   CONSTRAINT `PERM_MOTI` FOREIGN KEY (`id_motivo`) REFERENCES `motivos` (`id_mot`),
   CONSTRAINT `PERM_PERS` FOREIGN KEY (`id_personal`) REFERENCES `personal` (`id_personal`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci;
 
 /*Data for the table `permisos_personas` */
 
 LOCK TABLES `permisos_personas` WRITE;
 
-insert  into `permisos_personas`(`id_perm`,`id_motivo`,`id_personal`,`fecha_perm`,`salida_perm`,`llegada_perm`,`inputable_perm`,`estado_perm`,`tipo_perm`,`detalle_perm`) values (2,1,1,'2018-11-26','2018-11-26','2018-11-28',1,1,'D','Viaje');
+insert  into `permisos_personas`(`id_perm`,`id_motivo`,`id_personal`,`fecha_perm`,`salida_perm`,`llegada_perm`,`inputable_perm`,`estado_perm`,`tipo_perm`,`detalle_perm`) values (2,1,1,'2018-11-26','2018-11-26','2018-11-28',1,1,'D','Viaje'),(4,1,1,'2018-11-29','29/11/2018','29/11/2018',1,1,'D','asuntos personales'),(5,1,1,'2018-11-29','30/11/2018','01/12/2018',1,1,'D','ASUNTOS PERSONALES'),(6,1,1,'2018-11-29','29/11/2018','29/11/2018',1,1,'D','ASUNTO PERSONALES'),(7,2,1,'2018-11-29','13:21','15:30',1,1,'H','CITA MEDICA');
 
 UNLOCK TABLES;
 
@@ -482,8 +482,8 @@ DELIMITER $$
 	salida varchar(25),
 	llegada VARCHAR(25),
 	intputable tinyint,
-	estado char(1),
-	tipo tinyint,
+	estado TINYINT,
+	tipo char(1),
 	detalle varchar(150)
     )
 BEGIN
@@ -515,23 +515,20 @@ BEGIN
 	
 	when 'insertar' then
 	insert into permisos_personas (
-	fecha_perm,salida_perm,
-	llegada_perm,inputable_perm,
-	estado_perm,tipo_perm,
-	id_personal, id_motivo, detalle_perm
+	fecha_perm,			salida_perm,				llegada_perm,				inputable_perm,
+	estado_perm,			tipo_perm,				id_personal,				id_motivo, 
+	detalle_perm
 	) values (
-	fecha,salida,
-	llegada,intputable,
-	1,tipo,id_per,
-	id_mot,detalle
+	fecha,				salida,					llegada,				intputable,
+	1,				tipo,					id_per,					id_mot,					
+	detalle
 	);
 	
 	when 'modificar' then
 	update permisos_personas set 
-	salida_perm = salida, llegada_perm = llegada,
-	inputable_perm = inputable,
-	fecha_perm = fecha,tipo_perm = tipo,
-	id_motivo = id_mot where id_perm = id;
+	salida_perm = salida,		llegada_perm = llegada,			inputable_perm = intputable,		fecha_perm = fecha,		
+	tipo_perm = tipo,		id_motivo = id_mot,			detalle_perm = detalle,			id_personal = id_per
+	where id_perm = id;
 	end case;
     END */$$
 DELIMITER ;
