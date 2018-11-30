@@ -98,7 +98,7 @@ CREATE TABLE `permisos_personas` (
 
 LOCK TABLES `permisos_personas` WRITE;
 
-insert  into `permisos_personas`(`id_perm`,`id_motivo`,`id_personal`,`fecha_perm`,`salida_perm`,`llegada_perm`,`inputable_perm`,`estado_perm`,`tipo_perm`,`detalle_perm`) values (2,1,1,'2018-11-26','2018-11-26','2018-11-28',1,1,'D','Viaje'),(4,1,1,'2018-11-29','29/11/2018','29/11/2018',1,1,'D','asuntos personales'),(5,1,1,'2018-11-29','30/11/2018','01/12/2018',1,1,'D','ASUNTOS PERSONALES'),(6,1,1,'2018-11-29','29/11/2018','29/11/2018',1,1,'D','ASUNTO PERSONALES'),(7,2,1,'2018-11-29','13:21','15:30',1,1,'H','CITA MEDICA');
+insert  into `permisos_personas`(`id_perm`,`id_motivo`,`id_personal`,`fecha_perm`,`salida_perm`,`llegada_perm`,`inputable_perm`,`estado_perm`,`tipo_perm`,`detalle_perm`) values (2,1,1,'2018-11-26','2018-11-26','2018-11-28',0,1,'D','Viaje'),(4,1,1,'2018-11-29','29/11/2018','29/11/2018',1,1,'D','asuntos personales'),(5,1,1,'1970-01-01','21/05/2018','23/05/2018',1,1,'D','Consuta medica '),(6,2,1,'1970-01-01','13:30','14:30',1,1,'H','Cita medica'),(7,2,1,'2018-11-29','13:21','15:30',0,1,'H','CITA MEDICA');
 
 UNLOCK TABLES;
 
@@ -205,7 +205,7 @@ CREATE TABLE `tipos_sangre` (
 
 LOCK TABLES `tipos_sangre` WRITE;
 
-insert  into `tipos_sangre`(`id_t_sangre`,`descripcion_t_sangre`,`estado_t_sangre`) values (1,'A-',1),(2,'B-',1),(3,'AB+',1),(4,'A+',1);
+insert  into `tipos_sangre`(`id_t_sangre`,`descripcion_t_sangre`,`estado_t_sangre`) values (1,'A-',1),(2,'B',1),(3,'AB+',1),(4,'A+',1);
 
 UNLOCK TABLES;
 
@@ -504,7 +504,7 @@ BEGIN
 	FROM permisos_personas p, personal pr, motivos m
 	WHERE p.id_personal = pr.id_personal
 	and p.id_motivo = m.id_mot
-	and p.fecha_perm =  CURDATE();
+	ORDER BY p.id_perm DESC limit 100 ;
 	
 	when 'consultaid' then
 	SELECT 

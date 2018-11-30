@@ -44,16 +44,22 @@ class menuModelWidget extends Model
             "icon" => "fa-hotel",
             "sub-menu" => array(
                 array(
+                    "id" => "motivos",
+                    "title" => "Motivo",
+                    "icon" => " fa-circle-o",
+                    "link" => BASE_URL . "permisos/motivos"
+                ),
+                array(
                     "id" => "permiso",
-                    "title" => "Nuevo",
+                    "title" => "Permiso",
                     "icon" => " fa-circle-o",
                     "link" => BASE_URL . "permisos/"
                 ),
                 array(
-                    "id" => "Lista",
+                    "id" => "reportes",
                     "title" => "Lista",
                     "icon" => " fa-circle-o",
-                    "link" => BASE_URL . "permisos/"
+                    "link" => BASE_URL . "permisos/reportes"
                 ),
             ),
         );

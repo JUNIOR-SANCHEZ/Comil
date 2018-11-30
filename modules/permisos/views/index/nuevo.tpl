@@ -102,7 +102,7 @@
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="$('#form-ins')[0].reset();">
             <span aria-hidden="true">&times;</span>
           </button>
           <h4 class="modal-title"><strong>Registrar Permisos</strong></h4>
@@ -185,7 +185,7 @@
             </div>
           </div>
           <div class="modal-footer">
-            <button type="button" class="btn btn-danger" data-dismiss="modal">
+            <button type="button" class="btn btn-danger" data-dismiss="modal" onclick="$('#form-ins')[0].reset();">
               <i class="fa fa-times-circle-o" aria-hidden="true"></i> Cerrar
             </button>
             <button type="submit" class="btn btn-primary" id="btn-ins">
@@ -274,11 +274,11 @@
                 <label for="" class="col-sm-4 control-label">Inputable:</label>
                 <label class="col-sm-4">
                   Si:
-                  <input type="radio" name="rd_inputable" class="minimal pull-right" style="margin-right:20px " value="1" id="rd-inputable" />
+                  <input type="radio" name="rd_inputable" class="minimal pull-right" style="margin-right:20px " value="1" id="rd-inputable-mod" />
                 </label>
                 <label class="col-sm-4">
                   No:
-                  <input type="radio" name="rd_inputable" class="minimal pull-right" style="margin-right:20px " value="0" id="rd-noimputable" />
+                  <input type="radio" name="rd_inputable" class="minimal pull-right" style="margin-right:20px " value="0" id="rd-noimputable-mod" />
                 </label>
               </div>
             </div>

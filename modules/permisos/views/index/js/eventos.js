@@ -1,4 +1,5 @@
 $(document).ready(function () {
+  $('#modal-ins').modal({ backdrop: 'static', keyboard: false,show:false });
   $('[data-toggle="datepicker"]').datepicker({
     autoHide: true,
     zIndex: 2048

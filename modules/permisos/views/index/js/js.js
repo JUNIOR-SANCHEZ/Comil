@@ -14,6 +14,7 @@ $(document).ready(function () {
   });
   $(document).delegate('.btn-select', 'click', function () {
     let ruta = $(this).attr('data-ruta');
+    $("#form-mod")[0].reset();
     $.get(ruta, function (data) {
       $(`#cb-persona-mod option[value="${data.id_per}"]`).attr('selected', true);
       $(`#cb-motivo-mod option[value="${data.id_mot}"]`).attr('selected', true);
@@ -23,15 +24,19 @@ $(document).ready(function () {
       $('#tar-descripcion-mod').val(data.description);
       $("#inp-id-mod").val(data.id);
       if (data.inputable == 1) {
-        $('#rd-inputable').attr('checked', true);
-
-      } else if (data.inputable == 0) {
-        $('#rd-noinputable').attr('checked', true);
+        $('#rd-noinputable-mod').attr('checked', false);
+        $('#rd-inputable-mod').attr('checked', true);
+      }
+      if (data.inputable == 0) {
+        $('#rd-inputable-mod').attr('checked', false);
+        $('#rd-noimputable-mod').attr('checked', true);
       }
       if (data.tipo == 'D') {
+        $('#rd-hora-mod').attr('checked', false);
         $('#rd-dia-mod').attr('checked', true);
-
-      } else if (data.tipo == 'H') {
+      }
+      if (data.tipo == 'H') {
+        $('#rd-dia-mod').attr('checked', false);
         $('#rd-hora-mod').attr('checked', true);
       }
     }, 'JSON');
@@ -41,7 +46,6 @@ $(document).ready(function () {
     e.preventDefault();
     let formData = new FormData(document.getElementById("form-ins"));
     let ruta = $(this).attr("action");
-
     $.ajax({
       url: ruta,
       dataType: "JSON",
@@ -65,21 +69,18 @@ $(document).ready(function () {
       }
     });
   });
-
   $("#form-mod").on("submit", function (e) {
     e.preventDefault();
     let formData = new FormData(document.getElementById("form-mod"));
     let ruta = $(this).attr("action");
     $.ajax({
       url: ruta,
-      // dataType: "JSON",
+      dataType: "JSON",
       data: formData,
       processData: false,
       contentType: false,
       type: "POST",
       success: function (data) {
-        console.log(data);
-
         if (data.error) {
           swal(
             "Lo sentimos ha ocurrido un error inesperado",
@@ -87,13 +88,14 @@ $(document).ready(function () {
             "error"
           );
         } else {
-          $("#modal-ins").modal("hide");
+          $("#modal-mod").modal("hide");
           paginacion(pagina);
           swal("En hora buena!", data, "success");
-          $("#form-ins")[0].reset();
+          $("#form-mod")[0].reset();
         }
       }
     });
   });
 
+  
 });
